@@ -8,6 +8,38 @@
     <title>Document</title>
 </head>
 <body>
+    <script>
+        function loaded() {
+            const schema1 = {
+                "variables": {
+
+                },
+                "body": {
+                    "elements": [
+                        {
+                            "element": "h1",
+                            "content": "Hello World"
+                        }
+                    ]
+                }
+            };
+
+            const schema2 = {
+                "elements": [
+                    {
+                        "element": "h1",
+                        "content": "Hello World 2"
+                    }
+                ]
+            };
+
+            const html = crs.schema.parse(schema1);
+
+            document.documentElement.innerHTML = html;
+        }
+    </script>
+
+    <script type="module" src="/src/index.js" onload="loaded()"></script>
 
 </body>
 </html>
