@@ -85,8 +85,14 @@ export class HTMLParser extends BaseParser {
     }
 
     parseStyles(item) {
-        if (item[this.options.stylesKey] == null) return null;
-        return "";
+        let styles = item[this.options.stylesKey];
+        if (styles == null) return null;
+
+        if (Array.isArray(styles)) {
+            styles = styles.join(" ");
+        }
+
+        return `class="${styles}"`;
     }
 
     parseChildren(item) {
