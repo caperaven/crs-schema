@@ -62,8 +62,22 @@ export class HTMLParser extends BaseParser {
     }
 
     parseAttributes(item) {
-        if (item[this.options.attributesKey] == null) return null;
-        return "";
+        const attributes = item[this.options.attributesKey];
+        if (attributes == null) return null;
+
+        const result = [];
+        Object.entries(attributes).forEach((values) => {
+            const key = values[0];
+            let value = values[1];
+
+            for (let processor of this.valueProcessors) {
+                value = processor.process(value);
+            }
+
+            result.push(`${key}="${value}"`);
+        });
+
+        return result.join(" ");
     }
 
     parseStyles(item) {
