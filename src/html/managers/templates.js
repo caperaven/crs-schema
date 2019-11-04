@@ -5,7 +5,7 @@ export default class TemplatesManager extends BaseManager {
         return "templates"
     }
 
-    dispose() {
+    reset() {
         this.templates.clear();
         this.templates = null;
     }

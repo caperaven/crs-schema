@@ -46,15 +46,6 @@
             }
         };
 
-        const schema2 = {
-            "elements": [
-                {
-                    "element": "h1",
-                    "content": "Hello World 2"
-                }
-            ]
-        };
-
         function render(schema) {
             const html = schema.parse(schema1);
             document.documentElement.innerHTML = html;

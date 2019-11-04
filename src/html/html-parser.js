@@ -46,9 +46,13 @@ export class HTMLParser extends BaseParser {
         }
 
         const root = schema[this.options.root];
-        if (root != null) {
-            return this.providers.get(this.options.root).process(root);
-        }
+        if (root == null) throw new Error(`schema should have a property "${this.options.root}"`);
+
+        const result = this.providers.get(this.options.root).process(root);
+
+        this.managers.forEach(manager => manager.reset());
+
+        return result;
     }
 
     parseItem(item, key) {

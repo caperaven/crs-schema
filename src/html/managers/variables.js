@@ -9,6 +9,10 @@ export default class VariablesManager extends BaseManager {
         return true;
     }
 
+    reset() {
+        delete this.variables;
+    }
+
     initialize(variables) {
         this.variables = variables;
     }

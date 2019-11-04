@@ -1,9 +1,13 @@
 export class BaseManager {
-    constructor(schemaManager) {
-        this.schemaManager = schemaManager;
+    constructor(parser) {
+        this.parser = parser;
     }
     
     dispose() {
-        delete this.schemaManager;    
+        this.reset();
+        delete this.parser;
+    }
+
+    reset() {
     }
 }
