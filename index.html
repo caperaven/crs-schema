@@ -13,8 +13,21 @@
 
         const schema1 = {
             "variables": {
-
+                "translations": {
+                    "code": "Code"
+                }
             },
+            "templates": [
+                {
+                    "id": 0,
+                    "elements": [
+                        {
+                            "element": "div",
+                            "content": "@translations.code"
+                        }
+                    ]
+                }    
+            ],
             "body": {
                 "elements": [
                     {
