@@ -1,3 +1,5 @@
+import {BaseManager} from "./managers/base-manager.js";
+
 export class Schema {
     constructor() {
         this.options = {
@@ -6,19 +8,21 @@ export class Schema {
             attributesKey: "attributes",
             stylesKey: "styles",
             root: "body",
-            contentKey: "content",
+            contentKey: "content"
+        };
 
-            variables: "variables",
-            templates: "templates",
-            datasets: "datasets",
-            datasources: "datasources",
-            events: "customEvents",
-            triggers: "customTriggers",
-            perspectives: "perspectives"
+        this.assocations = {
+            content: "content",
+            attrName: "attrName",
+            attrValue: "attrValue"
         };
 
         this.data = {};
         this.providers = new Map();
+        this.managers = new Map();
+        this.attrNameManagers = [];
+        this.attrValueManagers = [];
+        this.contentManagers = [];
     }
 
     dispose() {
@@ -27,11 +31,30 @@ export class Schema {
 
         this.providers.clear();
         delete this.providers;
+
+        this.managers.clear();
+        delete this.managers;
+
+        this.attrNameManagers.length = 0;
+        this.attrValueManagers.length = 0;
+        this.contentManagers.length = 0;
     }
 
-    register(providerType) {
-        const instance = new providerType();
-        this.providers.set(instance.key, instance);
+    register(type) {
+        const instance = new type();
+
+        if (instance instanceof BaseManager) {
+            this.managers.set(instance.key, instance);
+            for (let association of instance.association) {
+                const array = `${association}Managers`;
+                if (this[array] != null) {
+                    this[array].push(instance);
+                }
+            }
+        }
+        else {
+            this.providers.set(instance.key, instance);
+        }
     }
 
     parse(schema) {
@@ -76,9 +99,16 @@ export class Schema {
         // check for variable content
         return content;
     }
+
+    async load(libraries) {
+        for (let library of libraries) {
+            await import(library);
+        }
+    }
 }
 
 window.crs = {schema: new Schema()};
+// JHR: make it so that you don't have to depend on the global path but can create individual instances.
 // JHR: todo: check for globals so that it attaches to window or globals if it runs in node.
 
 

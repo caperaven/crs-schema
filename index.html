@@ -9,7 +9,13 @@
 </head>
 <body>
     <script>
-        function loaded() {
+        async function loaded() {
+            await crs.schema.load([
+                "/src/managers/templates.js",
+                "/src/managers/variables.js"
+            ]);
+
+
             const schema1 = {
                 "variables": {
 
