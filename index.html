@@ -10,6 +10,7 @@
 <body>
     <script type="module">
         import {Schema} from "./src/schema.js";
+        import {HTMLParser} from "./src/html/html-parser.js";
 
         const schema1 = {
             "variables": {
@@ -46,16 +47,13 @@
                 }
             ]
         };
-        
-        const schema = new Schema([
-            "/src/html/providers/body.js",
-            "/src/html/providers/raw.js",
-            "/src/html/managers/templates.js",
-            "/src/html/managers/variables.js"
-        ], (schema) => {
+
+        function render(schema) {
             const html = schema.parse(schema1);
             document.documentElement.innerHTML = html;
-        });
+        }
+        
+        const schema = new Schema(new HTMLParser(), render);
     </script>
 
 </body>
