@@ -48,10 +48,10 @@
         };
         
         const schema = new Schema([
-            "/src/providers/body.js",
-            "/src/providers/raw.js",
-            "/src/managers/templates.js", 
-            "/src/managers/variables.js"
+            "/src/html/providers/body.js",
+            "/src/html/providers/raw.js",
+            "/src/html/managers/templates.js",
+            "/src/html/managers/variables.js"
         ], (schema) => {
             const html = schema.parse(schema1);
             document.documentElement.innerHTML = html;

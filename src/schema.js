@@ -1,4 +1,4 @@
-import {BaseManager} from "./managers/base-manager.js";
+import {BaseManager} from "./html/managers/base-manager.js";
 
 export class Schema {
     constructor(addons, readyCallback) {
