@@ -1,17 +1,17 @@
 export class BaseProvider {
-    constructor(schemaManager) {
-        this.schemaManager = schemaManager;
+    constructor(parser) {
+        this.parser = parser;
     }
 
     dispose() {
-        delete this.schemaManager;
+        delete this.parser;
     }
     
     process(item) {
-        const children = this.schemaManager.parseChildren(item);
-        const attributes = this.schemaManager.parseAttributes(item);
-        const styles = this.schemaManager.parseStyles(item);
-        const content = this.schemaManager.parseContent(item);
+        const children = this.parser.parseChildren(item);
+        const attributes = this.parser.parseAttributes(item);
+        const styles = this.parser.parseStyles(item);
+        const content = this.parser.parseContent(item);
 
         return {
             children: children,

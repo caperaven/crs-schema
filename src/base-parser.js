@@ -19,12 +19,6 @@ export class BaseParser {
 
         if (instance instanceof BaseManager) {
             this.managers.set(instance.key, instance);
-            for (let association of instance.association) {
-                const array = `${association}Managers`;
-                if (this[array] != null) {
-                    this[array].push(instance);
-                }
-            }
         }
         else {
             this.providers.set(instance.key, instance);

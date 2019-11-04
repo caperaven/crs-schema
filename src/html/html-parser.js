@@ -12,30 +12,43 @@ export class HTMLParser extends BaseParser {
             root: "body",
             contentKey: "content"
         };
-
-        this.attrNameManagers = [];
-        this.attrValueManagers = [];
-        this.contentManagers = [];
     }
 
     dispose() {
         delete this.options;
-
-        this.attrNameManagers.length = 0;
-        this.attrValueManagers.length = 0;
-        this.contentManagers.length = 0;
     }
 
     async initialize(callback) {
-        this._register((await import("./providers/body.js")).default);
-        this._register((await import("./providers/raw.js")).default);
         this._register((await import("./managers/templates.js")).default);
         this._register((await import("./managers/variables.js")).default);
+
+        this._register((await import("./providers/body.js")).default);
+        this._register((await import("./providers/raw.js")).default);
+        this._register((await import("./providers/template.js")).default);
         callback(this);
     }
 
     parse(schema) {
-        return this.parseItem(schema[this.options.root] != null ? schema[this.options.root] : schema, this.options.root);
+        const keys = Object.keys(schema);
+
+        // 1. initialize managers
+        for (let key of keys) {
+            if (key != this.options.root) {
+                if (this.managers.has(key)) {
+                    this.managers.get(key).initialize(schema[key]);
+                }
+            }
+        }
+
+        // 2. parse root
+        if (this.providers.has(this.options.root) == false) {
+            throw new Error(`schema requires a "${this.options.root}" option`);
+        }
+
+        const root = schema[this.options.root];
+        if (root != null) {
+            return this.providers.get(this.options.root).process(root);
+        }
     }
 
     parseItem(item, key) {
