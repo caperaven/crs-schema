@@ -1,6 +1,6 @@
 import {BaseProvider} from "./base-provider.js";
 
-class BodyProvider extends BaseProvider {
+export default class BodyProvider extends BaseProvider {
     get key() {
         return "body"
     }
@@ -19,5 +19,3 @@ class BodyProvider extends BaseProvider {
         })
     }
 }
-
-crs.schema.register(BodyProvider);

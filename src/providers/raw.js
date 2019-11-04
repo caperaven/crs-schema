@@ -1,6 +1,6 @@
 import {BaseProvider} from "./base-provider.js";
 
-class RawProvider extends BaseProvider {
+export default class RawProvider extends BaseProvider {
     get key() {
         return "raw"
     }
@@ -20,5 +20,3 @@ class RawProvider extends BaseProvider {
         })
     }
 }
-
-crs.schema.register(RawProvider);

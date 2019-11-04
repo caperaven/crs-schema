@@ -1,17 +1,12 @@
 import {BaseManager} from "./base-manager.js";
+import {assocations} from "./associations.js";
 
-export class VariablesManager extends BaseManager {
+export default class VariablesManager extends BaseManager {
     get key() {
         return "variable"
     }
 
     get association() {
-        return [crs.schema.assocations.content, crs.schema.assocations.attrValue];
-    }
-
-    constructor(schema) {
-        super();
+        return [assocations.content, assocations.attrValue];
     }
 }
-
-crs.schema.register(VariablesManager);

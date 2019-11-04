@@ -8,44 +8,42 @@
     <title>Document</title>
 </head>
 <body>
-    <script>
-        async function loaded() {
-            await crs.schema.load([
-                "/src/managers/templates.js",
-                "/src/managers/variables.js"
-            ]);
+    <script type="module">
+        import {Schema} from "./src/schema.js";
 
+        const schema1 = {
+            "variables": {
 
-            const schema1 = {
-                "variables": {
-
-                },
-                "body": {
-                    "elements": [
-                        {
-                            "element": "h1",
-                            "content": "Hello World"
-                        }
-                    ]
-                }
-            };
-
-            const schema2 = {
+            },
+            "body": {
                 "elements": [
                     {
                         "element": "h1",
-                        "content": "Hello World 2"
+                        "content": "Hello World"
                     }
                 ]
-            };
+            }
+        };
 
-            const html = crs.schema.parse(schema1);
-
+        const schema2 = {
+            "elements": [
+                {
+                    "element": "h1",
+                    "content": "Hello World 2"
+                }
+            ]
+        };
+        
+        const schema = new Schema([
+            "/src/providers/body.js",
+            "/src/providers/raw.js",
+            "/src/managers/templates.js", 
+            "/src/managers/variables.js"
+        ], (schema) => {
+            const html = schema.parse(schema1);
             document.documentElement.innerHTML = html;
-        }
+        });
     </script>
-
-    <script type="module" src="/src/index.js" onload="loaded()"></script>
 
 </body>
 </html>

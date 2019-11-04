@@ -1,7 +1,7 @@
 import {BaseManager} from "./managers/base-manager.js";
 
 export class Schema {
-    constructor() {
+    constructor(addons, readyCallback) {
         this.options = {
             elementKey: "element",
             childrenKey: "elements",
@@ -10,19 +10,26 @@ export class Schema {
             root: "body",
             contentKey: "content"
         };
-
-        this.assocations = {
-            content: "content",
-            attrName: "attrName",
-            attrValue: "attrValue"
-        };
-
+        
         this.data = {};
         this.providers = new Map();
         this.managers = new Map();
         this.attrNameManagers = [];
         this.attrValueManagers = [];
         this.contentManagers = [];
+        
+        const promises = [];
+        for (let addon of addons || []) {
+            promises.push(import(addon));
+        }
+        
+        Promise.allSettled(promises)
+            .then((results) => 
+                results.forEach(result => 
+                    this.register(result.value.default)
+                )
+            )
+            .then(() => readyCallback(this)).catch(error => console.error(error));
     }
 
     dispose() {
@@ -41,7 +48,7 @@ export class Schema {
     }
 
     register(type) {
-        const instance = new type();
+        const instance = new type(this);
 
         if (instance instanceof BaseManager) {
             this.managers.set(instance.key, instance);
@@ -99,16 +106,4 @@ export class Schema {
         // check for variable content
         return content;
     }
-
-    async load(libraries) {
-        for (let library of libraries) {
-            await import(library);
-        }
-    }
 }
-
-window.crs = {schema: new Schema()};
-// JHR: make it so that you don't have to depend on the global path but can create individual instances.
-// JHR: todo: check for globals so that it attaches to window or globals if it runs in node.
-
-
