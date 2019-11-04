@@ -83,10 +83,13 @@ export class HTMLParser extends BaseParser {
     }
 
     parseContent(item) {
-        const content = item[this.options.contentKey];
+        let content = item[this.options.contentKey];
         if (content == null) return null;
 
-        // check for variable content
+        for (let processor of this.valueProcessors) {
+           content = processor.process(content);
+        }
+
         return content;
     }
 }
