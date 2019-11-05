@@ -6,8 +6,10 @@ export default class TemplatesManager extends BaseManager {
     }
 
     reset() {
-        this.templates.clear();
-        this.templates = null;
+        if (this.templates != null) {
+            this.templates.clear();
+            this.templates = null;
+        }
     }
 
     initialize(templates) {

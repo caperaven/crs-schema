@@ -26,30 +26,14 @@
         const schema1 = {
             "variables": {
                 "translations": {
-                    "code": "Code"
+                    "heading": "Welcome Material"
                 }
             },
-            "templates": [
-                {
-                    "id": 0,
-                    "elements": [
-                        {
-                            "element": "div",
-                            "styles": ["flex", "fullsize"],
-                            "content": "@translations.code",
-                            "attributes": {
-                                "data-value": "@translations.code",
-                                "data-time": "This is the time @now"
-                            }
-                        }
-                    ]
-                }    
-            ],
             "body": {
                 "elements": [
                     {
                         "element": "material-header",
-                        "caption": "Hello World",
+                        "caption": "@translations.heading",
                         "elements": [
                         ]
                     }
