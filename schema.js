@@ -35,8 +35,7 @@ export const template = {
                     {
                         "element": "button",
                         "caption": "Add",
-                        "icon": "add",
-                        "styles": ["mdc-button--raised"]
+                        "icon": "add"
                     }
                 ]
             }
