@@ -22,46 +22,13 @@
     <script type="module">
         import {Schema} from "./src/schema.js";
         import {HTMLParser} from "./src/html/html-parser.js";
+        import {template} from "./schema.js";
 
-        const schema1 = {
-            "variables": {
-                "translations": {
-                    "heading": "Welcome Material",
-                    "alarm": "Alarm",
-                    "bookmark": "Bookmark"
-                }
-            },
-            "body": {
-                "elements": [
-                    {
-                        "element": "header",
-                        "caption": "@translations.heading",
-                        "buttons": [
-                            {
-                                "id": "btnAlarm",
-                                "caption": "@translations.alarm",
-                                "icon": "alarm"
-                            },
-                            {
-                                "id": "btnBookmark",
-                                "caption": "@translations.bookmark",
-                                "icon": "bookmark"
-                            }
-                        ]
-                    }
-                ]
-            }
-        };
-
-        function render(schema) {
-            const html = schema.parse(schema1);
+        new Schema(new HTMLParser(), (instance) => {
+            const html = instance.parse(template);
             document.querySelector("main").innerHTML = html;
-        }
-        
-        const schema = new Schema(new HTMLParser(), render,
-            [
-                "/material/providers/header.js"
-            ]);
+        }, ["/material/providers/header.js"]);
+
     </script>
 </body>
 </html>
