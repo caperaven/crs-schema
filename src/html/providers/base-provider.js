@@ -8,6 +8,10 @@ export class BaseProvider {
     }
     
     process(item) {
+        if (this.styles != null) {
+            item.styles = [];
+        }
+
         const children = this.parser.parseChildren(item);
         const attributes = this.parser.parseAttributes(item);
         const styles = this.parser.parseStyles(item);

@@ -6,15 +6,13 @@ export default class BodyProvider extends BaseProvider {
     }
 
     get template() {
-        return `<div __attributes__ __styles__>__content__</div>`
+        return `__content__`
     }
 
     process(item) {
         const parts = super.process(item);
 
         return this.setValues(this.template, {
-            "__attributes__": parts.attributes,
-            "__styles__": parts.styles,
             "__content__": parts.children
         })
     }

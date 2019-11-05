@@ -10,17 +10,33 @@ export const template = {
         "elements": [
             {
                 "element": "header",
-                "caption": "@translations.heading",
-                "buttons": [
+                "elements": [
                     {
-                        "id": "btnAlarm",
-                        "caption": "@translations.alarm",
-                        "icon": "alarm"
-                    },
+                        "element": "header-bar",
+                        "caption": "@translations.heading",
+                        "buttons": [
+                            {
+                                "id": "btnAlarm",
+                                "caption": "@translations.alarm",
+                                "icon": "alarm"
+                            },
+                            {
+                                "id": "btnBookmark",
+                                "caption": "@translations.bookmark",
+                                "icon": "bookmark"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "element": "main",
+                "elements": [
                     {
-                        "id": "btnBookmark",
-                        "caption": "@translations.bookmark",
-                        "icon": "bookmark"
+                        "element": "button",
+                        "caption": "Add",
+                        "icon": "add",
+                        "styles": ["mdc-button--raised"]
                     }
                 ]
             }

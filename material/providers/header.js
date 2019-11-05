@@ -2,7 +2,7 @@ import {BaseProvider} from "./../../src/html/providers/base-provider.js";
 
 export default class MaterialHeaderProvider extends BaseProvider {
     get key() {
-        return "header"
+        return "header-bar"
     }
 
     get template() {
