@@ -10,7 +10,7 @@ export default class MaterialHeaderProvider extends BaseProvider {
             <header class="mdc-top-app-bar">
               <div class="mdc-top-app-bar__row">
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-                  <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button">menu</button>
+                  <button id="btnMenu" class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button">menu</button>
                   <span class="mdc-top-app-bar__title">__caption__</span>
                 </section>
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
