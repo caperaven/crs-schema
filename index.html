@@ -26,15 +26,27 @@
         const schema1 = {
             "variables": {
                 "translations": {
-                    "heading": "Welcome Material"
+                    "heading": "Welcome Material",
+                    "alarm": "Alarm",
+                    "bookmark": "Bookmark"
                 }
             },
             "body": {
                 "elements": [
                     {
-                        "element": "material-header",
+                        "element": "header",
                         "caption": "@translations.heading",
-                        "elements": [
+                        "buttons": [
+                            {
+                                "id": "btnAlarm",
+                                "caption": "@translations.alarm",
+                                "icon": "alarm"
+                            },
+                            {
+                                "id": "btnBookmark",
+                                "caption": "@translations.bookmark",
+                                "icon": "bookmark"
+                            }
                         ]
                     }
                 ]
