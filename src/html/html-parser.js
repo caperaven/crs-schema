@@ -98,9 +98,7 @@ export class HTMLParser extends BaseParser {
             const key = values[0];
             let value = values[1];
 
-            for (let processor of this.valueProcessors) {
-                value = processor.process(value);
-            }
+            value = this.parseStringValue(value);
 
             result.push(`${key}="${value}"`);
         });
@@ -134,10 +132,15 @@ export class HTMLParser extends BaseParser {
         let content = item[this.options.contentKey];
         if (content == null) return null;
 
-        for (let processor of this.valueProcessors) {
-           content = processor.process(content);
-        }
+        content = this.parseStringValue(content);
 
         return content;
+    }
+
+    parseStringValue(str) {
+        for (let processor of this.valueProcessors) {
+            str = processor.process(str);
+        }
+        return str;
     }
 }

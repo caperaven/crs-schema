@@ -30,7 +30,7 @@ export default class MaterialHeaderProvider extends BaseProvider {
         ]);
 
         return this.setValues(this.template, {
-            "__caption__": item.caption
+            "__caption__": this.parser.parseStringValue(item.caption)
         })
     }
 }
