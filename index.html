@@ -5,9 +5,20 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <title>Document</title>
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+    </style>
 </head>
 <body>
+    <main></main>
+
     <script type="module">
         import {Schema} from "./src/schema.js";
         import {HTMLParser} from "./src/html/html-parser.js";
@@ -27,7 +38,8 @@
                             "styles": ["flex", "fullsize"],
                             "content": "@translations.code",
                             "attributes": {
-                                "data-value": "@translations.code"
+                                "data-value": "@translations.code",
+                                "data-time": "This is the time @now"
                             }
                         }
                     ]
@@ -36,12 +48,10 @@
             "body": {
                 "elements": [
                     {
-                        "element": "h1",
-                        "content": "Hello World"
-                    },
-                    {
-                        "element": "template",
-                        "template": 0
+                        "element": "material-header",
+                        "caption": "Hello World",
+                        "elements": [
+                        ]
                     }
                 ]
             }
@@ -49,11 +59,13 @@
 
         function render(schema) {
             const html = schema.parse(schema1);
-            document.documentElement.innerHTML = html;
+            document.querySelector("main").innerHTML = html;
         }
         
-        const schema = new Schema(new HTMLParser(), render);
+        const schema = new Schema(new HTMLParser(), render,
+            [
+                "/material/providers/header.js"
+            ]);
     </script>
-
 </body>
 </html>

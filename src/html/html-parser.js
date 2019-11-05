@@ -12,26 +12,44 @@ export class HTMLParser extends BaseParser {
             root: "body",
             contentKey: "content"
         };
+
+        this.styleImports = [];
     }
 
     dispose() {
         delete this.options;
     }
 
-    async initialize(callback) {
-        this._register((await import("./managers/templates.js")).default);
-        this._register((await import("./managers/variables.js")).default);
+    async initialize(callback, libraries) {
+        const toLoad = [
+            "./managers/templates.js",
+            "./managers/variables.js",
+            "./providers/body.js",
+            "./providers/raw.js",
+            "./providers/template.js",
+            ...libraries
+        ];
 
-        this._register((await import("./providers/body.js")).default);
-        this._register((await import("./providers/raw.js")).default);
-        this._register((await import("./providers/template.js")).default);
+        for (let library of toLoad || []) {
+            this._register((await import(library)).default);
+        }
+
         callback(this);
+    }
+
+    addStyleImports(imports) {
+        if (Array.isArray(imports)) {
+            imports.forEach(imp => this.styleImports.push(imp));
+        }
+        else
+        {
+            this.styleImports.push(imports);
+        }
     }
 
     parse(schema) {
         const keys = Object.keys(schema);
 
-        // 1. initialize managers
         for (let key of keys) {
             if (key != this.options.root) {
                 if (this.managers.has(key)) {
@@ -40,7 +58,6 @@ export class HTMLParser extends BaseParser {
             }
         }
 
-        // 2. parse root
         if (this.providers.has(this.options.root) == false) {
             throw new Error(`schema requires a "${this.options.root}" option`);
         }
@@ -48,9 +65,16 @@ export class HTMLParser extends BaseParser {
         const root = schema[this.options.root];
         if (root == null) throw new Error(`schema should have a property "${this.options.root}"`);
 
-        const result = this.providers.get(this.options.root).process(root);
+        let result = this.providers.get(this.options.root).process(root);
 
         this.managers.forEach(manager => manager.reset());
+
+        if (this.styleImports.length > 0) {
+            const imports = [];
+            this.styleImports.forEach(style => imports.push(`@import "${style}";`));
+
+            result = `<style>${imports.join("\n")};</style>${result}`;
+        }
 
         return result;
     }

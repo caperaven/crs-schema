@@ -20,6 +20,8 @@ export default class VariablesManager extends BaseManager {
     process(value) {
         if (value.trim()[0] != "@") return value;
 
+        //JHR: make this async and put a catch on it
+
         value = value.slice(1);
         let fn = new Function("variables", `return variables.${value}`);
         const result = fn(this.variables);

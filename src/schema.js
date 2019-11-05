@@ -1,7 +1,7 @@
 export class Schema {
-    constructor(parser, callback) {
+    constructor(parser, callback, addons) {
         this.parser = parser;
-        this.parser.initialize(callback).catch(error => console.log(error));
+        this.parser.initialize(callback, addons).catch(error => console.log(error));
     }
 
     dispose() {
