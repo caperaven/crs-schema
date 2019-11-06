@@ -1,4 +1,9 @@
 import {BaseParser} from "./../base-parser.js";
+import TemplatesManager from "./managers/templates.js";
+import VariablesManager from "./managers/variables.js";
+import BodyProvider from "./providers/body.js";
+import RawProvider from "./providers/raw.js";
+import TemplateProvider from "./providers/template.js";
 
 export class HTMLParser extends BaseParser {
     constructor() {
@@ -21,15 +26,11 @@ export class HTMLParser extends BaseParser {
     }
 
     async initialize() {
-        const toLoad = [
-            "./managers/templates.js",
-            "./managers/variables.js",
-            "./providers/body.js",
-            "./providers/raw.js",
-            "./providers/template.js"
-        ];
-
-        await this.load(toLoad);
+        this._register(TemplatesManager);
+        this._register(VariablesManager);
+        this._register(BodyProvider);
+        this._register(RawProvider);
+        this._register(TemplateProvider);
     }
 
     async load(libraries) {

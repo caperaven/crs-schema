@@ -28,8 +28,8 @@
 </head>
 <body>
     <script type="module">
-        import {createSchemaLoader} from "./src/schema.js";
-        import {HTMLParser} from "./src/html/html-parser.js";
+        import {createSchemaLoader} from "./dist/crs-schema.js";
+        import {HTMLParser} from "./dist/crs-html-parser.js";
         import {template} from "./schema.js";
 
         createSchemaLoader(new HTMLParser()).then(async manager => {
