@@ -20,19 +20,22 @@
             grid-template-rows: 56px 1fr;
             grid-template-columns: auto;
         }
+
+        main {
+            grid-row: 2;
+        }
     </style>
 </head>
 <body>
     <script type="module">
-        import {Schema} from "./src/schema.js";
+        import {createSchemaLoader} from "./src/schema.js";
         import {HTMLParser} from "./src/html/html-parser.js";
         import {template} from "./schema.js";
 
-        new Schema(new HTMLParser(), (instance) => {
-            const html = instance.parse(template);
-            document.body.innerHTML = html;
-        }, ["/material/providers/header.js", "/material/providers/button.js"]);
-
+        createSchemaLoader(new HTMLParser()).then(async manager => {
+            await manager.load(["/material/providers/header.js", "/material/providers/button.js"]);
+            document.body.innerHTML = manager.parse(template);
+        });
     </script>
 </body>
 </html>

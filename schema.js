@@ -6,26 +6,32 @@ export const template = {
             "bookmark": "Bookmark"
         }
     },
+    "templates": [
+        {
+            "id": 0,
+            "elements": [
+                {
+                    "element": "div",
+                    "content": "Ziggy has blue eyes"
+                }
+            ]
+        }
+    ],
     "body": {
         "elements": [
             {
                 "element": "header",
-                "elements": [
+                "caption": "@translations.heading",
+                "buttons": [
                     {
-                        "element": "header-bar",
-                        "caption": "@translations.heading",
-                        "buttons": [
-                            {
-                                "id": "btnAlarm",
-                                "caption": "@translations.alarm",
-                                "icon": "alarm"
-                            },
-                            {
-                                "id": "btnBookmark",
-                                "caption": "@translations.bookmark",
-                                "icon": "bookmark"
-                            }
-                        ]
+                        "id": "btnAlarm",
+                        "caption": "@translations.alarm",
+                        "icon": "alarm"
+                    },
+                    {
+                        "id": "btnBookmark",
+                        "caption": "@translations.bookmark",
+                        "icon": "bookmark"
                     }
                 ]
             },
@@ -36,6 +42,10 @@ export const template = {
                         "element": "button",
                         "caption": "Add",
                         "icon": "add"
+                    },
+                    {
+                        "element": "template",
+                        "template": 0
                     }
                 ]
             }

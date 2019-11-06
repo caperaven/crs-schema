@@ -1,7 +1,12 @@
-export class Schema {
-    constructor(parser, callback, addons) {
+export async function createSchemaLoader(parser) {
+    const result = new Schema(parser);
+    await result.parser.initialize();
+    return result;
+}
+
+class Schema {
+    constructor(parser) {
         this.parser = parser;
-        this.parser.initialize(callback, addons).catch(error => console.log(error));
     }
 
     dispose() {
@@ -11,5 +16,12 @@ export class Schema {
 
     parse(schema) {
         return this.parser.parse(schema);
+    }
+
+    load(libraries) {
+        return new Promise(async resolve => {
+            await this.parser.load(libraries);
+            resolve(this);
+        });
     }
 }

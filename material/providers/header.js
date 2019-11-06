@@ -2,7 +2,7 @@ import {BaseProvider} from "./../../src/html/providers/base-provider.js";
 
 export default class MaterialHeaderProvider extends BaseProvider {
     get key() {
-        return "header-bar"
+        return "header"
     }
 
     get template() {
@@ -25,7 +25,7 @@ export default class MaterialHeaderProvider extends BaseProvider {
         return `<button id="__id__" class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="__caption__">__icon__</button>`
     }
 
-    processButtons(item) {
+    _processButtons(item) {
         if (item.buttons == null) return "";
 
         const result = [];
@@ -46,7 +46,7 @@ export default class MaterialHeaderProvider extends BaseProvider {
 
         return this.setValues(this.template, {
             "__caption__": this.parser.parseStringValue(item.caption),
-            "__actions__": this.processButtons(item)
+            "__actions__": this._processButtons(item)
         })
     }
 }

@@ -20,21 +20,22 @@ export class HTMLParser extends BaseParser {
         delete this.options;
     }
 
-    async initialize(callback, libraries) {
+    async initialize() {
         const toLoad = [
             "./managers/templates.js",
             "./managers/variables.js",
             "./providers/body.js",
             "./providers/raw.js",
-            "./providers/template.js",
-            ...libraries
+            "./providers/template.js"
         ];
 
-        for (let library of toLoad || []) {
+        await this.load(toLoad);
+    }
+
+    async load(libraries) {
+        for (let library of libraries || []) {
             this._register((await import(library)).default);
         }
-
-        callback(this);
     }
 
     addStyleImports(imports) {
