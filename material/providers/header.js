@@ -1,6 +1,6 @@
-import {BaseProvider} from "./../../dist/es/html/crs-base-provider.js";
+import {BaseProvider} from "./../../src/html/providers/base-provider.js";
 
-export default class MaterialHeaderProvider extends BaseProvider {
+export default class HeaderProvider extends BaseProvider {
     get key() {
         return "header"
     }

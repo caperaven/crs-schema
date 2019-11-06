@@ -2,6 +2,15 @@ import { terser } from "rollup-plugin-terser";
 
 export default [
     {
+        input: "material/index.js",
+        output: [
+            { file: 'dist/material.js', format: 'iife' }
+        ],
+        plugins: [
+            terser()
+        ]
+    },
+    {
         input: "src/schema.js",
         output: [
             { file: 'dist/es/crs-schema.js', format: 'es' }
