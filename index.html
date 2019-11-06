@@ -24,37 +24,50 @@
         main {
             grid-row: 2;
         }
+
+        button {
+            display:block;
+            width: 70px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        button svg {
+            width: 24px;
+            height: 24px;
+        }
     </style>
 </head>
 <body>
     <script type="module">
         import {template} from "./schema.js";
 
-        const worker = new Worker('worker.js');
+        // const worker = new Worker('worker.js');
+        //
+        // worker.onmessage = (e) => {
+        //     if (e.data == "ready") {
+        //         worker.postMessage(template);
+        //     }
+        //     else {
+        //         document.body.innerHTML = e.data;
+        //     }
+        // };
 
-        worker.onmessage = (e) => {
-            if (e.data == "ready") {
-                worker.postMessage(template);
-            }
-            else {
-                document.body.innerHTML = e.data;
-            }
-        };
+        import {createSchemaLoader} from "./dist/es/crs-schema.js";
+        import {HTMLParser} from "./dist/es/html/crs-html-parser.js";
 
-        // import {createSchemaLoader} from "./dist/es/crs-schema.js";
-        // import {HTMLParser} from "./dist/es/html/crs-html-parser.js";
-        //
-        // import HeaderProvider from "./material/providers/header.js";
-        // import ButtonProvider from "./material/providers/button.js";
-        //
-        // createSchemaLoader(new HTMLParser()).then(async manager => {
-        //     //await manager.load(["/material/providers/header.js", "/material/providers/button.js"]);
-        //
-        //     manager.register(HeaderProvider);
-        //     manager.register(ButtonProvider);
-        //
-        //     document.body.innerHTML = manager.parse(template);
-        // });
+        import HeaderProvider from "./material/providers/header.js";
+        import ButtonProvider from "./material/providers/button.js";
+
+        createSchemaLoader(new HTMLParser()).then(async manager => {
+            //await manager.load(["/material/providers/header.js", "/material/providers/button.js"]);
+
+            manager.register(HeaderProvider);
+            manager.register(ButtonProvider);
+
+            document.body.innerHTML = manager.parse(template);
+        });
     </script>
 </body>
 </html>

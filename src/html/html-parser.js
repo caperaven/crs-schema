@@ -4,6 +4,7 @@ import VariablesManager from "./managers/variables.js";
 import BodyProvider from "./providers/body.js";
 import RawProvider from "./providers/raw.js";
 import TemplateProvider from "./providers/template.js";
+import ButtonProvider from "./providers/button.js";
 
 export class HTMLParser extends BaseParser {
     constructor() {
@@ -31,6 +32,7 @@ export class HTMLParser extends BaseParser {
         this.register(BodyProvider);
         this.register(RawProvider);
         this.register(TemplateProvider);
+        this.register(ButtonProvider);
     }
 
     async load(libraries) {
