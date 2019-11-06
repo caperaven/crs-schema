@@ -4,6 +4,9 @@ export async function createSchemaLoader(parser) {
     return result;
 }
 
+self.crs = self.crs || {};
+self.crs.createSchemaLoader = createSchemaLoader;
+
 class Schema {
     constructor(parser) {
         this.parser = parser;
@@ -23,5 +26,9 @@ class Schema {
             await this.parser.load(libraries);
             resolve(this);
         });
+    }
+
+    register(plugin) {
+        this.parser.register(plugin);
     }
 }

@@ -1,4 +1,4 @@
-import {BaseProvider} from "./../../dist/html/crs-base-provider.js";
+import {BaseProvider} from "./../../dist/es/html/crs-base-provider.js";
 
 export default class ButtonProvider extends BaseProvider {
     get key() {

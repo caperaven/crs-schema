@@ -26,16 +26,16 @@ export class HTMLParser extends BaseParser {
     }
 
     async initialize() {
-        this._register(TemplatesManager);
-        this._register(VariablesManager);
-        this._register(BodyProvider);
-        this._register(RawProvider);
-        this._register(TemplateProvider);
+        this.register(TemplatesManager);
+        this.register(VariablesManager);
+        this.register(BodyProvider);
+        this.register(RawProvider);
+        this.register(TemplateProvider);
     }
 
     async load(libraries) {
         for (let library of libraries || []) {
-            this._register((await import(library)).default);
+            this.register((await import(library)).default);
         }
     }
 
@@ -146,3 +146,6 @@ export class HTMLParser extends BaseParser {
         return str;
     }
 }
+
+self.crs = self.crs || {};
+self.crs.HTMLParser = HTMLParser;

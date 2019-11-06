@@ -18,7 +18,7 @@ export class BaseParser {
         this.valueProcessors.length = 0;
     }
 
-    _register(type) {
+    register(type) {
         const instance = new type(this);
 
         if (instance instanceof BaseManager) {
