@@ -11,6 +11,15 @@ export default [
         ]
     },
     {
+        input: "material/index.cjs.js",
+        output: [
+            { file: 'dist/cjs/material.js', format: 'cjs' }
+        ],
+        plugins: [
+            terser()
+        ]
+    },
+    {
         input: "src/schema.js",
         output: [
             { file: 'dist/es/crs-schema.js', format: 'es' }

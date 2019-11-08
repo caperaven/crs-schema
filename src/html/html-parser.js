@@ -149,5 +149,7 @@ export class HTMLParser extends BaseParser {
     }
 }
 
-self.crs = self.crs || {};
-self.crs.HTMLParser = HTMLParser;
+if (typeof self != "undefined") {
+    self.crs = self.crs || {};
+    self.crs.HTMLParser = HTMLParser;
+}

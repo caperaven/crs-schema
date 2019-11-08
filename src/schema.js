@@ -4,8 +4,10 @@ export async function createSchemaLoader(parser) {
     return result;
 }
 
-self.crs = self.crs || {};
-self.crs.createSchemaLoader = createSchemaLoader;
+if (typeof self != "undefined") {
+    self.crs = self.crs || {};
+    self.crs.createSchemaLoader = createSchemaLoader;
+}
 
 class Schema {
     constructor(parser) {
