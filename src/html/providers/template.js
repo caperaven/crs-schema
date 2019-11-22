@@ -14,4 +14,8 @@ export default class TemplateProvider extends BaseProvider {
 
         return parts.children;
     }
+
+    validate(item, errors) {
+        this.assert(() => item.template == null, errors, "template element must have a valid template property");
+    }
 }

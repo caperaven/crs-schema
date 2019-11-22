@@ -31,4 +31,8 @@ export class BaseParser {
             this.providers.set(instance.key, instance);
         }
     }
+
+    validate() {
+
+    }
 }

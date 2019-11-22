@@ -41,18 +41,18 @@
 </head>
 <body>
     <script type="module">
-        import {template} from "./schema.js";
-
-        const worker = new Worker('worker.js');
-
-        worker.onmessage = (e) => {
-            if (e.data == "ready") {
-                worker.postMessage(template);
-            }
-            else {
-                document.body.innerHTML = e.data;
-            }
-        };
+        // import {template} from "./schema.js";
+        //
+        // const worker = new Worker('worker.js');
+        //
+        // worker.onmessage = (e) => {
+        //     if (e.data == "ready") {
+        //         worker.postMessage(template);
+        //     }
+        //     else {
+        //         document.body.innerHTML = e.data;
+        //     }
+        // };
 
 // import {createSchemaLoader} from "./dist/es/crs-schema.js";
 // import {HTMLParser} from "./dist/es/html/crs-html-parser.js";
@@ -67,7 +67,19 @@
 //     manager.register(ButtonProvider);
 //
 //     document.body.innerHTML = manager.parse(template);
-// });
+
+        import {createSchemaLoader} from "./src/schema.js";
+        import {HTMLParser} from "./src/html/html-parser.js";
+
+        fetch("./test/schemas/simple-with-body.json")
+            .then(result => result.text())
+            .then(text => JSON.parse(text))
+            .then(json => {
+                createSchemaLoader(new HTMLParser()).then(async manager => {
+                    const result = manager.validate(json);
+                    console.log(result);
+                })
+            })
     </script>
 </body>
 </html>

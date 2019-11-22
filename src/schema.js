@@ -19,6 +19,12 @@ class Schema {
         this.parser = null;
     }
 
+    validate(schema) {
+        const errors = [];
+        this.parser.validate(schema, errors);
+        return errors;
+    }
+
     parse(schema) {
         return this.parser.parse(schema);
     }

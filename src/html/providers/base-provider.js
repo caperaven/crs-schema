@@ -33,4 +33,22 @@ export class BaseProvider {
         }
         return str;
     }
+
+    validate(item, errors) {
+        if (item.elements != null) {
+            for (let element of item.elements) {
+                this.parser.validateItem(element, errors);
+            }
+        }
+    }
+
+    assert(callback, errors, message) {
+        const failed = callback() == true;
+
+        if (failed) {
+            errors.push(message)
+        }
+
+        return !failed;
+    }
 }

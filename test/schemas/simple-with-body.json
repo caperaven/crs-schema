@@ -1,0 +1,21 @@
+{
+  "templates": [
+    {
+      "id": 0,
+      "elements": [
+        {
+          "element": "button",
+          "caption": "Test"
+        }
+      ]
+    }
+  ],
+  "body": {
+    "elements": [
+      {
+        "element": "template",
+        "template": 0
+      }
+    ]
+  }
+}

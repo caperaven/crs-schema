@@ -147,6 +147,35 @@ export class HTMLParser extends BaseParser {
         }
         return str;
     }
+
+    validate(schema, errors) {
+        const rootProvider = this.providers.get(this.options.root);
+        if (rootProvider == null) {
+            errors.push("a root provider was not registered");
+        }
+
+        const keys = Object.keys(schema);
+
+        for (let key of keys) {
+            if (key != this.options.root) {
+                if (this.managers.has(key)) {
+                    const manager = this.managers.get(key);
+                    if (manager.validate != null) {
+                        manager.validate(schema[key], errors);
+                    }
+                }
+            }
+        }
+
+        const root = schema[this.options.root];
+        rootProvider && rootProvider.validate(root, errors);
+    }
+
+    validateItem(item, errors) {
+        const key = item["element"];
+        const provider = this.providers.get(key);
+        provider.validate && provider.validate(item, errors);
+    }
 }
 
 if (typeof self != "undefined") {
