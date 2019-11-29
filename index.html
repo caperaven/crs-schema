@@ -41,7 +41,7 @@
 </head>
 <body>
     <script type="module">
-        // import {template} from "./schema.js";
+        import {template} from "./schema.js";
         //
         // const worker = new Worker('worker.js');
         //
@@ -54,32 +54,29 @@
         //     }
         // };
 
-// import {createSchemaLoader} from "./dist/es/crs-schema.js";
-// import {HTMLParser} from "./dist/es/html/crs-html-parser.js";
-//
-// import HeaderProvider from "./material/providers/header.js";
-// import ButtonProvider from "./material/providers/button.js";
-//
-// createSchemaLoader(new HTMLParser()).then(async manager => {
-//     //await manager.load(["/material/providers/header.js", "/material/providers/button.js"]);
-//
-//     manager.register(HeaderProvider);
-//     manager.register(ButtonProvider);
-//
-//     document.body.innerHTML = manager.parse(template);
+    import {createSchemaLoader} from "./publish/es/crs-schema.js";
+    import {HTMLParser} from "./publish/es/html/crs-html-parser.js";
+    import "./publish/material.js";
 
-        import {createSchemaLoader} from "./src/schema.js";
-        import {HTMLParser} from "./src/html/html-parser.js";
+    createSchemaLoader(new HTMLParser()).then(async manager => {
+        manager.register(crs.material.HeaderProvider);
+        manager.register(crs.material.ButtonProvider);
 
-        fetch("./test/schemas/simple-with-body.json")
-            .then(result => result.text())
-            .then(text => JSON.parse(text))
-            .then(json => {
-                createSchemaLoader(new HTMLParser()).then(async manager => {
-                    const result = manager.validate(json);
-                    console.log(result);
-                })
-            })
+        document.body.innerHTML = manager.parse(template);
+    });
+
+        // import {createSchemaLoader} from "./publish/es/crs-schema.js";
+        // import {HTMLParser} from "./publish/es/html/crs-html-parser.js";
+        //
+        // fetch("./test/schemas/simple-with-body.json")
+        //     .then(result => result.text())
+        //     .then(text => JSON.parse(text))
+        //     .then(json => {
+        //         createSchemaLoader(new HTMLParser()).then(async manager => {
+        //             const result = manager.validate(json);
+        //             console.log(result);
+        //         })
+        //     }).catch(error => {console.error(error)})
     </script>
 </body>
 </html>

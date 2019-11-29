@@ -4,8 +4,7 @@
       "id": 0,
       "elements": [
         {
-          "element": "button",
-          "caption": "Test"
+          "element": "button"
         }
       ]
     }

@@ -52,6 +52,7 @@ export class HTMLParser extends BaseParser {
     }
 
     parse(schema) {
+        this.schema = schema;
         const keys = Object.keys(schema);
 
         for (let key of keys) {
@@ -79,6 +80,8 @@ export class HTMLParser extends BaseParser {
 
             result = `<style>${imports.join("\n")};</style>${result}`;
         }
+
+        delete this.schema;
 
         return result;
     }

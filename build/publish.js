@@ -6,6 +6,15 @@ const path = require("path");
 class Publish {
     static async distribute() {
         const instance = new Publish();
+        instance.copyFiles("./dist/cjs/*.*", "cjs");
+        instance.copyFiles("./dist/cjs/html/*.*", "cjs/html/");
+
+        instance.copyFiles("./dist/es/*.*", "es");
+        instance.copyFiles("./dist/es/html/*.*", "es/html/");
+
+        instance.copyFiles("./dist/iife/*.*", "iife");
+        instance.copyFiles("./dist/iife/html/*.*", "iife/html/");
+
         instance.copyFiles("./dist/*.*");
         instance.copyFiles("./readme.md");
         //instance.copyFiles("./examples/*.html", "examples");
