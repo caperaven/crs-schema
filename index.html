@@ -54,29 +54,29 @@
         //     }
         // };
 
-    import {createSchemaLoader} from "./publish/es/crs-schema.js";
-    import {HTMLParser} from "./publish/es/html/crs-html-parser.js";
-    import "./publish/material.js";
+    // import {createSchemaLoader} from "./publish/es/crs-schema.js";
+    // import {HTMLParser} from "./publish/es/html/crs-html-parser.js";
+    // import "./publish/material.js";
+    //
+    // createSchemaLoader(new HTMLParser()).then(async manager => {
+    //     manager.register(crs.material.HeaderProvider);
+    //     manager.register(crs.material.ButtonProvider);
+    //
+    //     document.body.innerHTML = manager.parse(template);
+    // });
 
-    createSchemaLoader(new HTMLParser()).then(async manager => {
-        manager.register(crs.material.HeaderProvider);
-        manager.register(crs.material.ButtonProvider);
+        import {createSchemaLoader} from "./publish/es/crs-schema.js";
+        import {HTMLParser} from "./publish/es/html/crs-html-parser.js";
 
-        document.body.innerHTML = manager.parse(template);
-    });
-
-        // import {createSchemaLoader} from "./publish/es/crs-schema.js";
-        // import {HTMLParser} from "./publish/es/html/crs-html-parser.js";
-        //
-        // fetch("./test/schemas/simple-with-body.json")
-        //     .then(result => result.text())
-        //     .then(text => JSON.parse(text))
-        //     .then(json => {
-        //         createSchemaLoader(new HTMLParser()).then(async manager => {
-        //             const result = manager.validate(json);
-        //             console.log(result);
-        //         })
-        //     }).catch(error => {console.error(error)})
+        fetch("./test/schemas/simple-with-body.json")
+            .then(result => result.text())
+            .then(text => JSON.parse(text))
+            .then(json => {
+                createSchemaLoader(new HTMLParser()).then(async manager => {
+                    const result = manager.validate(json);
+                    console.log(result);
+                })
+            }).catch(error => {console.error(error)})
     </script>
 </body>
 </html>

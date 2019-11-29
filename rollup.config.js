@@ -4,7 +4,7 @@ export default [
     {
         input: "material/index.js",
         output: [
-            { file: 'dist/material.js', format: 'iife' }
+            { file: 'dist/material.js', format: 'iife', sourcemap: true}
         ],
         plugins: [
             terser()
@@ -13,7 +13,7 @@ export default [
     {
         input: "material/index.cjs.js",
         output: [
-            { file: 'dist/cjs/material.js', format: 'cjs' }
+            { file: 'dist/cjs/material.js', format: 'cjs', sourcemap: true}
         ],
         plugins: [
             terser()
@@ -22,7 +22,7 @@ export default [
     {
         input: "src/schema.js",
         output: [
-            { file: 'dist/es/crs-schema.js', format: 'es' }
+            { file: 'dist/es/crs-schema.js', format: 'es', sourcemap: true}
         ],
         plugins: [
             terser()
@@ -31,7 +31,7 @@ export default [
     {
         input: "src/schema.js",
         output: [
-            { file: 'dist/cjs/crs-schema.js', format: 'cjs' }
+            { file: 'dist/cjs/crs-schema.js', format: 'cjs', sourcemap: true}
         ],
         plugins: [
             terser()
@@ -40,7 +40,7 @@ export default [
     {
         input: "src/schema.js",
         output: [
-            { file: 'dist/iife/crs-schema.js', format: 'iife' }
+            { file: 'dist/iife/crs-schema.js', format: 'iife', sourcemap: true}
         ],
         plugins: [
             terser()
@@ -49,7 +49,7 @@ export default [
     {
         input: "src/html/html-parser.js",
         output: [
-            { file: 'dist/es/html/crs-html-parser.js', format: 'es' }
+            { file: 'dist/es/html/crs-html-parser.js', format: 'es', sourcemap: true}
         ],
         plugins: [
             terser()
@@ -58,7 +58,7 @@ export default [
     {
         input: "src/html/html-parser.js",
         output: [
-            { file: 'dist/cjs/html/crs-html-parser.js', format: 'cjs' }
+            { file: 'dist/cjs/html/crs-html-parser.js', format: 'cjs', sourcemap: true}
         ],
         plugins: [
             terser()
@@ -67,7 +67,7 @@ export default [
     {
         input: "src/html/html-parser.js",
         output: [
-            { file: 'dist/iife/html/crs-html-parser.js', format: 'iife' }
+            { file: 'dist/iife/html/crs-html-parser.js', format: 'iife', sourcemap: true}
         ],
         plugins: [
             terser()
@@ -76,7 +76,7 @@ export default [
     {
         input: "src/html/providers/base-provider.js",
         output: [
-            { file: 'dist/es/html/crs-base-provider.js', format: 'es' }
+            { file: 'dist/es/html/crs-base-provider.js', format: 'es', sourcemap: true}
         ],
         plugins: [
             terser()
@@ -85,7 +85,7 @@ export default [
     {
         input: "src/html/providers/base-provider.js",
         output: [
-            { file: 'dist/cjs/html/crs-base-provider.js', format: 'cjs' }
+            { file: 'dist/cjs/html/crs-base-provider.js', format: 'cjs', sourcemap: true}
         ],
         plugins: [
             terser()
@@ -94,7 +94,7 @@ export default [
     {
         input: "src/html/managers/base-manager.js",
         output: [
-            { file: 'dist/es/html/crs-base-manager.js', format: 'es' }
+            { file: 'dist/es/html/crs-base-manager.js', format: 'es', sourcemap: true}
         ],
         plugins: [
             terser()
@@ -103,7 +103,7 @@ export default [
     {
         input: "src/html/managers/base-manager.js",
         output: [
-            { file: 'dist/cjs/html/crs-base-manager.js', format: 'cjs' }
+            { file: 'dist/cjs/html/crs-base-manager.js', format: 'cjs', sourcemap: true}
         ],
         plugins: [
             terser()

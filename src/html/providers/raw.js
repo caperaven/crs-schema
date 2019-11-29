@@ -19,4 +19,7 @@ export default class RawProvider extends BaseProvider {
             "__content__": parts.children || parts.content || ""
         })
     }
+
+    validate(item, errors) {
+    }
 }

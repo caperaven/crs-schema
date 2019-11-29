@@ -14,6 +14,10 @@
       {
         "element": "template",
         "template": 0
+      },
+      {
+        "element": "div",
+        "content": "Hello World"
       }
     ]
   }

@@ -176,7 +176,12 @@ export class HTMLParser extends BaseParser {
 
     validateItem(item, errors) {
         const key = item["element"];
-        const provider = this.providers.get(key);
+        let provider = this.providers.get(key);
+
+        if (provider == null) {
+            provider = this.providers.get("raw");
+        }
+
         provider.validate && provider.validate(item, errors);
     }
 }
