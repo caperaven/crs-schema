@@ -21,7 +21,7 @@ export class BaseParser {
     register(type) {
         const instance = new type(this);
 
-        if (instance instanceof BaseManager) {
+        if (instance.isManager == true) {
             this.managers.set(instance.key, instance);
             if (instance.valueProcessor == true) {
                 this.valueProcessors.push(instance);

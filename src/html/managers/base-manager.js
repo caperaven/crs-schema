@@ -1,6 +1,7 @@
 export class BaseManager {
     constructor(parser) {
         this.parser = parser;
+        this.isManager = true;
     }
     
     dispose() {
