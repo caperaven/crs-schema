@@ -21,5 +21,6 @@ export default class RawProvider extends BaseProvider {
     }
 
     validate(item, errors) {
+        super.validate(item, errors);
     }
 }
