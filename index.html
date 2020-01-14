@@ -54,10 +54,10 @@
         //     }
         // };
 
-    import {createSchemaLoader} from "./publish/es/crs-schema.js";
-    import {HTMLParser} from "./publish/es/html/crs-html-parser.js";
+    import {createSchemaLoader} from "./src/schema.js";
+    import {HTMLParser} from "./src/html/html-parser.js";
     import {TemplateParser} from "./src/html/template-parser.js";
-    import "./publish/material.js";
+    import "./material/index.js";
 
     createSchemaLoader(new HTMLParser()).then(async manager => {
         manager.register(crs.material.HeaderProvider);

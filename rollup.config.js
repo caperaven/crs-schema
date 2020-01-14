@@ -73,6 +73,41 @@ export default [
             terser()
         ]
     },
+
+
+    {
+        input: "src/html/template-parser.js",
+        output: [
+            { file: 'dist/es/html/crs-template-parser.js', format: 'es', sourcemap: true}
+        ],
+        plugins: [
+            terser()
+        ]
+    },
+    {
+        input: "src/html/template-parser.js",
+        output: [
+            { file: 'dist/cjs/html/crs-template-parser.js', format: 'cjs', sourcemap: true}
+        ],
+        plugins: [
+            terser()
+        ]
+    },
+    {
+        input: "src/html/template-parser.js",
+        output: [
+            { file: 'dist/iife/html/crs-template-parser.js', format: 'iife', sourcemap: true}
+        ],
+        plugins: [
+            terser()
+        ]
+    },
+
+
+
+
+
+
     {
         input: "src/html/providers/base-provider.js",
         output: [

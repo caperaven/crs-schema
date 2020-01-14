@@ -1,4 +1,4 @@
-import {HTMLBaseParser} from "./../html-base-parser.js";
+import {HTMLBaseParser} from "./html-base-parser.js";
 
 export class HTMLParser extends HTMLBaseParser {
     addStyleImports(imports) {
