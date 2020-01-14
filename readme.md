@@ -6,7 +6,7 @@ This provides a way for you to have schema driven UI.
 ## Schema
 The schema is a json structure that defines a user interface.
 The schema is interpreted using a parser.
-There is a HTMLParser that ships with the standard package.
+There is a HTMLParser and TemplateParser that ships with the standard package.
 
 ## Parsing
 The parser uses managers and providers to process the schema and generate the relevant markup.  
@@ -177,3 +177,39 @@ globalThis.crs.material = {
     ButtonProvider: ButtonProvider
 };
 ```
+
+## Template Parser
+All the examples above use the html parser that parses the schema once to html and then is done.
+The template parser is a bit different.
+It does not parse the entire document in one go, but instead you can ask for a template at a time using the template's id defined in the schema.
+
+Consider the following schema structure
+
+```json
+{
+    "templates": [
+        {
+            "id": 0,
+            "elements": [
+                {
+                    "element": "div",
+                    "content": "Hello world"
+                }
+            ]
+        }
+    ]
+}
+```
+If I wanted the HTML for that template i can use the template parser and for template 0.
+
+```js
+createSchemaLoader(new TemplateParser(template)).then(async manager => {
+    const result = manager.parse(0);
+    console.log(result);
+});
+```
+
+You will notice that it looks a lot like the template parser, but in this case you parse the template on during the constructor.
+This means that you need to manually dipose the manager when you are done with it, but it also means that you can call the parse of the manager when ever you need it.
+
+This is useful when you want to generate bit's and bobs of HTML and not all at once.
