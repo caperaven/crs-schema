@@ -1,7 +1,5 @@
 # UI Schema
 
-## under construction
-
 ## Introduction
 This provides a way for you to have schema driven UI.
 
@@ -50,3 +48,56 @@ To define the location of where the template is rendered we use a "template" ele
 The template element uses the template id to define the actual template to use.
 In the above example the template element uses the template with id 0.
 
+## Starting the process
+To start using the schema you need to first initialize it
+
+```js
+import {createSchemaLoader} from "/node_modules/crs-schema/es/crs-schema.js";
+import {HTMLParser} from "/node_modules/crs-schema/es/html/crs-html-parser.js";
+
+createSchemaLoader(new HTMLParser()).then(async manager => {
+    manager.register(MyProvider);
+})
+```
+
+## Custom provider
+```js
+import {BaseProvider} from "/node_modules/crs-schema/es/html/crs-base-provider.js"
+
+export default class GroupProvider extends BaseProvider {
+        get key() {
+            return "button"
+        }
+    
+        get template() {
+            return `<button __attributes__ __styles__>
+                        __icon__
+                        <span class="mdc-button__label">__caption__</span>
+                    </button>`;
+        }
+
+    process(item) {
+        const parts = super.process(item);
+
+        if (parts.styles == null) {
+            parts.styles = 'class="mdc-button"'
+        }
+        else {
+            parts.styles = parts.styles.split('="').join('="mdc-button ')
+        }
+
+        this.parser.addStyleImports([
+            "/node_modules/@material/button/dist/mdc.button.css",
+        ]);
+
+        const icon = item.icon != null ? this.iconTemplate.split("__icon__").join(item.icon) : "";
+
+        return this.setValues(this.template, {
+            "__icon__": icon,
+            "__caption__": icon.caption,
+            "__attributes__": parts.attributes,
+            "__styles__": parts.styles
+        })
+    }
+}
+```
