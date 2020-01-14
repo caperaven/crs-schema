@@ -2,6 +2,8 @@
 
 ## Introduction
 This provides a way for you to have schema driven UI.
+crs schema is modular allowing you to provide any feature you need.
+Though the default generates html you can really generate whatever you want by writing your own parsers.
 
 ## Schema
 The schema is a json structure that defines a user interface.
@@ -213,3 +215,108 @@ You will notice that it looks a lot like the template parser, but in this case y
 This means that you need to manually dipose the manager when you are done with it, but it also means that you can call the parse of the manager when ever you need it.
 
 This is useful when you want to generate bit's and bobs of HTML and not all at once.
+
+##Variables
+You can declare variables in the schema under a variables property.
+
+```json
+{
+  "variables": {
+    "translations": {
+      "heading": "Hello World"
+    } 
+  }
+}
+```
+
+In the above example we created a sub object in the variables called translations where you can insert the translated text.
+When you want to use that you need to refer to the path of the variable you want to use.
+
+```json
+"caption": "@translations.heading"
+```
+
+If you create custom providers for different scenarios you need to ensure you use parseStringValue.
+Different managers are value processors. That means that they are called before setting the final value and they manipulate the final result.
+By default the schema parser has a variables manager that enables the variables function.
+
+The variables manager extends BaseManager but has a extra property.
+
+```js
+get valueProcessor() {
+    return true;
+}
+```
+
+Consider the following process code of a provider
+
+```js
+process(item) {
+    this.parser.addStyleImports([
+        "/node_modules/@material/top-app-bar/dist/mdc.top-app-bar.min.css",
+        "/node_modules/@material/icon-button/dist/mdc.icon-button.min.css"
+    ]);
+
+    return this.setValues(this.template, {
+        "__caption__": this.parser.parseStringValue(item.caption),
+        "__actions__": this._processButtons(item)
+    })
+}
+```
+
+You can see that it calls the parsers's parseStringValue function.
+This will loop through all the value processors, make changes and send you the result back.
+
+The parser base has some other functions you may want to take note of
+
+1. parseAttributes
+1. parseStyles
+1. parseChildren
+1. parseContent
+
+The process function on the base provider already calls all those by default for you to use as it returns you the processed parts as.
+
+```js
+{
+    children: children,
+    attributes: attributes,
+    styles: styles,
+    content: content
+}
+```
+
+so in your process function you can use it this way.
+
+```js
+const parts = super.process(item);
+return parts.children;
+```
+
+here is a more complete example of a provider
+
+```js
+import {BaseProvider} from "./pathtobaseprovider/crs-base-provider.js";
+
+export default class GroupProvider extends BaseProvider {
+    get key() {
+        return "group"
+    }
+
+    get template() {
+        return `<div role="group" __attributes__ __styles__>
+                    <header><h2>__caption__</h2></header>
+                    <div data-container="true"></div>
+                </div>`
+    }
+
+    process(item) {
+        const parts = super.process(item);
+
+        return this.setValues(this.template, {
+            "__caption__": this.parser.parseStringValue(item.caption),
+            "__attributes__": parts.attributes,
+            "__styles__": parts.styles
+        })
+    }
+}
+```

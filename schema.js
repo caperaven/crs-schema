@@ -11,8 +11,8 @@ export const template = {
             "id": 0,
             "elements": [
                 {
-                    "element": "div",
-                    "content": "Ziggy has blue eyes"
+                    "element": "group",
+                    "caption": "@translations.heading"
                 }
             ]
         }

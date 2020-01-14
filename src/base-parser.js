@@ -1,5 +1,3 @@
-import {BaseManager} from "./html/managers/base-manager.js";
-
 export class BaseParser {
     constructor() {
         this.providers = new Map();
@@ -16,7 +14,6 @@ export class BaseParser {
         delete this.managers;
 
         this.valueProcessors.length = 0;
-        this.styleImports.length = 0;
         this.options = 0;
     }
 
