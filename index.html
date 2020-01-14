@@ -54,29 +54,43 @@
         //     }
         // };
 
-    // import {createSchemaLoader} from "./publish/es/crs-schema.js";
-    // import {HTMLParser} from "./publish/es/html/crs-html-parser.js";
-    // import "./publish/material.js";
-    //
-    // createSchemaLoader(new HTMLParser()).then(async manager => {
-    //     manager.register(crs.material.HeaderProvider);
-    //     manager.register(crs.material.ButtonProvider);
-    //
-    //     document.body.innerHTML = manager.parse(template);
-    // });
+    import {createSchemaLoader} from "./publish/es/crs-schema.js";
+    import {HTMLParser} from "./publish/es/html/crs-html-parser.js";
+    import {TemplateParser} from "./src/html/template-parser.js";
+    import "./publish/material.js";
 
-        import {createSchemaLoader} from "./publish/es/crs-schema.js";
-        import {HTMLParser} from "./publish/es/html/crs-html-parser.js";
+    createSchemaLoader(new HTMLParser()).then(async manager => {
+        manager.register(crs.material.HeaderProvider);
+        manager.register(crs.material.ButtonProvider);
 
-        fetch("./test/schemas/simple-with-body.json")
-            .then(result => result.text())
-            .then(text => JSON.parse(text))
-            .then(json => {
-                createSchemaLoader(new HTMLParser()).then(async manager => {
-                    const result = manager.validate(json);
-                    console.log(result);
-                })
-            }).catch(error => {console.error(error)})
+        document.body.innerHTML = manager.parse(template);
+    });
+
+    createSchemaLoader(new TemplateParser(template)).then(async manager => {
+        const result = manager.parse(0);
+        console.log(result);
+    });
+
+        // import {createSchemaLoader} from "./publish/es/crs-schema.js";
+        // import {HTMLParser} from "./publish/es/html/crs-html-parser.js";
+        // import {TemplateParser} from "./src/html/template-parser.js";
+
+        // fetch("./test/schemas/simple-with-body.json").then(result => result.text()).then(text => JSON.parse(text))
+        //     .then(json => {
+        //         createSchemaLoader(new HTMLParser()).then(async manager => {
+        //             const result = manager.validate(json);
+        //             console.log(result);
+        //         });
+        //     }).catch(error => {console.error(error)})
+
+
+        // fetch("./test/schemas/simple-with-body.json").then(result => result.text()).then(text => JSON.parse(text))
+        //     .then(json => {
+        //         createSchemaLoader(new TemplateParser(json)).then(async manager => {
+        //             const result = manager.parse(0);
+        //             console.log(result);
+        //         });
+        //     })
     </script>
 </body>
 </html>

@@ -16,6 +16,8 @@ export class BaseParser {
         delete this.managers;
 
         this.valueProcessors.length = 0;
+        this.styleImports.length = 0;
+        this.options = 0;
     }
 
     register(type) {
@@ -30,6 +32,34 @@ export class BaseParser {
         else {
             this.providers.set(instance.key, instance);
         }
+    }
+
+    async load(libraries) {
+        for (let library of libraries || []) {
+            this.register((await import(library)).default);
+        }
+    }
+
+    init() {
+        const keys = Object.keys(this.schema);
+
+        for (let key of keys) {
+            if (key != this.options.root) {
+                if (this.managers.has(key)) {
+                    this.managers.get(key).initialize(this.schema[key]);
+                }
+            }
+        }
+    }
+
+    processStyleImports(result) {
+        if (this.styleImports.length > 0) {
+            const imports = [];
+            this.styleImports.forEach(style => imports.push(`@import "${style}";`));
+
+            result = `<style>${imports.join("\n")};</style>${result}`;
+        }
+        return result;
     }
 
     validate() {

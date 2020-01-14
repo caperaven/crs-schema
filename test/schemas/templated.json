@@ -1,0 +1,12 @@
+{
+  "templates": [
+    {
+      "id": 0,
+      "elements": [
+        {
+          "element": "button"
+        }
+      ]
+    }
+  ]
+}

@@ -101,3 +101,79 @@ export default class GroupProvider extends BaseProvider {
     }
 }
 ```
+
+this.setValues is a function on the base provider.
+
+## Validating schema
+You can use the manager to validate if the schema object is formatted correctly.
+
+```js
+createSchemaLoader(new HTMLParser()).then(async manager => {
+    const result = manager.validate(json);
+})
+```
+
+Providers need a validate function.
+
+```js
+validate(item, errors) {
+    this.assert(() => item.caption == null, errors, "button must have a caption");
+    super.validate(item, errors);
+}
+```
+
+this.assert is a build in function of the base provider
+
+## Webworker
+This can function on a web worker
+
+```js
+const worker = new Worker('worker.js');
+
+worker.onmessage = (e) => {
+    // when the worker is ready, send it the template to process
+    if (e.data == "ready") {
+        worker.postMessage(template);
+    }
+    else {
+        // append the html the worker sent back
+        document.body.innerHTML = e.data;
+    }
+};
+```
+
+See the following worker logic
+
+```js
+importScripts("/dist/iife/crs-schema.js", "/dist/iife/html/crs-html-parser.js", "/dist/material.js");
+
+let manager;
+self.crs.createSchemaLoader(new self.crs.HTMLParser())
+    .then(result => {
+        manager = result;
+        manager.register(self.crs.material.HeaderProvider);
+        manager.register(self.crs.material.ButtonProvider);
+        postMessage("ready");
+    });
+
+onmessage = (msg) => {
+    const html = manager.parse(msg.data);
+    postMessage(html);
+};
+```
+
+if you are using modular web workers you can import them using normal es6 modules.
+In this example we are not using modular workers as at this time it was not supported in chrome and thus we need to use iife.
+
+The material.js file is a bundled file (you can just use rollup) and can look like this
+
+```js
+import HeaderProvider from "./providers/header.js";
+import ButtonProvider from "./providers/button.js";
+
+globalThis.crs = globalThis.crs || {};
+globalThis.crs.material = {
+    HeaderProvider: HeaderProvider,
+    ButtonProvider: ButtonProvider
+};
+```
