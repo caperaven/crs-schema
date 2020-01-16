@@ -11,7 +11,11 @@ export default class TemplateProvider extends BaseProvider {
 
         const template = manager.getTemplate(item.template);
         const parts = super.process(template);
+        return parts.children;
+    }
 
+    processTemplate(template) {
+        const parts = super.process(template);
         return parts.children;
     }
 

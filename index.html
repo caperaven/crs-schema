@@ -67,7 +67,16 @@
     });
 
     createSchemaLoader(new TemplateParser(template)).then(async manager => {
-        const result = manager.parse(0);
+        //const result = manager.parse(0);
+        const result = manager.parser.parseTemplate({
+            "id": 0,
+            "elements": [
+                {
+                    "element": "group",
+                    "caption": "@translations.heading"
+                }
+            ]
+        });
         console.log(result);
     });
 

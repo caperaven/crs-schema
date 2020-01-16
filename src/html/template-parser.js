@@ -21,4 +21,11 @@ export class TemplateParser extends HTMLBaseParser {
 
         return result;
     }
+
+    parseTemplate(tpl) {
+        let result = this.providers.get("template").processTemplate(tpl);
+        result = this.processStyleImports(result);
+
+        return result;
+    }
 }
