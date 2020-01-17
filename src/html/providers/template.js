@@ -9,7 +9,14 @@ export default class TemplateProvider extends BaseProvider {
         const manager = this.parser.managers.get("templates");
         if (manager == null) throw new Error("templates manager should be registered");
 
-        const template = manager.getTemplate(item.template);
+        let store = Object.keys(item)[1];
+        const id = item[store];
+
+        if (store == "template") {
+            store = "templates";
+        }
+
+        const template = manager.getTemplate(store, id);
         const parts = super.process(template);
         return parts.children;
     }

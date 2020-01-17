@@ -6,13 +6,47 @@ export const template = {
             "bookmark": "Bookmark"
         }
     },
+
+    "uiTemplates": [
+        {
+            "id": 0,
+            "elements": [
+                {
+                    "element": "h1",
+                    "content": "Hello World"
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "elements": [
+                {
+                    "element": "h2",
+                    "content": "Hello World"
+                }
+            ]
+        }
+    ],
+
     "templates": [
+        {
+            "import": "uiTemplates"
+        },
         {
             "id": 0,
             "elements": [
                 {
                     "element": "group",
-                    "caption": "@translations.heading"
+                    "content": "@translations.heading"
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "elements": [
+                {
+                    "element": "div",
+                    "content": "Testing new template"
                 }
             ]
         }
@@ -46,7 +80,19 @@ export const template = {
                     {
                         "element": "template",
                         "template": 0
-                    }
+                    },
+                    {
+                        "element": "template",
+                        "uiTemplates": 0,
+                    },
+                    {
+                        "element": "template",
+                        "uiTemplates": 1,
+                    },
+                    {
+                        "element": "template",
+                        "template": 1
+                    },
                 ]
             }
         ]

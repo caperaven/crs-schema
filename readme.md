@@ -50,6 +50,43 @@ To define the location of where the template is rendered we use a "template" ele
 The template element uses the template id to define the actual template to use.
 In the above example the template element uses the template with id 0.
 
+It can be difficult to mange a lot of templates and you may want to group them in different lists.
+You can do this on the root level of the schema where you can create different template lists.
+
+```json
+{
+  "uiTemplates": [
+      ... normal template definition
+  ],
+  "templates": [
+     {
+        "import": "uiTemplates"
+     }
+  ]
+}
+```
+In the above example you can see ware are importing uiTemplates in templates.
+To prevent id clash they are managed seperate.
+This means that when you use it you need be a bit more explicit.
+
+First a example of a normal template usage 
+```json
+{
+    "element": "template",
+    "template": 0,
+},
+```
+
+Next using a template defined in the uiTemplates collection
+```json
+{
+    "element": "template",
+    "uiTemplates": 0,
+},
+```
+
+When using a imported custom template collection you need to define what the template collection is using that name in your usage definition.
+
 ## Starting the process
 To start using the schema you need to first initialize it
 

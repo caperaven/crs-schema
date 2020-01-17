@@ -6,22 +6,39 @@ export default class TemplatesManager extends BaseManager {
     }
 
     reset() {
-        if (this.templates != null) {
-            this.templates.clear();
-            this.templates = null;
+        for (let part of this._parts) {
+            if (this[part] != null) {
+                this[part].clear();
+                this[part] = null;
+            }
         }
     }
 
-    initialize(templates) {
-        this.templates = new Map();
+    initialize() {
+        this._parts = [];
+        this._load("templates");
+    }
+
+    _load(name) {
+        if (this[name] == null) {
+            this[name] = new Map();
+            this._parts.push(name);
+        }
+
+        const templates = this.parser.schema[name];
         for (let template of templates) {
-            this.templates.set(template.id, template);
+            if (template.import == null) {
+                this[name].set(template.id, template);
+            }
+            else {
+                this._load(template.import);
+            }
         }
     }
 
-    getTemplate(id) {
-        if(this.templates.has(id) == false) throw new Error(`There is no template in the schema for with id "${id}"`);
-        return this.templates.get(id);
+    getTemplate(store, id) {
+        if(this[store].has(id) == false) throw new Error(`There is no template in the schema for with id "${id}"`);
+        return this[store].get(id);
     }
 
     validate(templates, errors) {
