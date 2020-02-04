@@ -1,5 +1,6 @@
 export class BaseParser {
-    constructor() {
+    constructor(attributes) {
+        this.attributes = attributes;
         this.providers = new Map();
         this.managers = new Map();
 

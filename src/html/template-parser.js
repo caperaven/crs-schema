@@ -1,8 +1,8 @@
 import {HTMLBaseParser} from "./html-base-parser.js";
 
 export class TemplateParser extends HTMLBaseParser {
-    constructor(schema) {
-        super();
+    constructor(schema, attributes) {
+        super(attributes);
         this.schema = schema;
     }
 

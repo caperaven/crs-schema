@@ -7,8 +7,8 @@ import TemplateProvider from "./providers/template.js";
 import ButtonProvider from "./providers/button.js";
 
 export class HTMLBaseParser extends BaseParser {
-    constructor() {
-        super();
+    constructor(attributes) {
+        super(attributes);
         this.styleImports = [];
 
         this.options = {

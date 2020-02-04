@@ -357,3 +357,15 @@ export default class GroupProvider extends BaseProvider {
     }
 }
 ```
+
+## Attributes
+There are times when you want to use the same parser but output additional information in the HTML. 
+Such a example is when you want to generate designer enabled html vs runtime html from the same parser.
+When creating the parser you can set the parsers attribute by passing in a object literal that contains your settings.
+
+In the provider you can access that attribute 
+```
+this.parser.attributes
+```
+
+Depending on what you have added there you can include or exclude some additional markup.
