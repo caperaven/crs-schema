@@ -6,7 +6,7 @@ export default class TemplatesManager extends BaseManager {
     }
 
     reset() {
-        for (let part of this._parts) {
+        for (let part of this._parts || []) {
             if (this[part] != null) {
                 this[part].clear();
                 this[part] = null;

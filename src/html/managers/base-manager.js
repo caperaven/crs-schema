@@ -29,4 +29,8 @@ export class BaseManager {
             }
         }
     }
+
+    reset() {
+        // override to clear
+    }
 }

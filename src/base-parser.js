@@ -39,6 +39,10 @@ export class BaseParser {
     }
 
     init() {
+        this.managers.forEach(value => {
+            value.reset && value.reset();
+        });
+
         const keys = Object.keys(this.schema);
 
         for (let key of keys) {

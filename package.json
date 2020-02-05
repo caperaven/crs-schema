@@ -1,6 +1,6 @@
 {
     "name": "crs-schema",
-    "version": "0.0.34",
+    "version": "0.0.36",
     "description": "",
     "main": "src/index.js",
     "directories": {
@@ -12,7 +12,11 @@
         "build-publish": "node build/publish.js",
         "parse": "node build/process.js"
     },
-    "keywords": ["UI", "Generation", "Schema"],
+    "keywords": [
+        "UI",
+        "Generation",
+        "Schema"
+    ],
     "author": "Johan Rabie",
     "homepage": "https://caperaven.co.za/",
     "license": "ISC",
