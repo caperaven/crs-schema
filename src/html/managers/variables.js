@@ -18,7 +18,7 @@ export default class VariablesManager extends BaseManager {
     }
 
     process(value) {
-        if (value.trim()[0] != "@") return value;
+        if (typeof value != "string" || value.trim()[0] != "@") return value;
 
         //JHR: make this async and put a catch on it
 

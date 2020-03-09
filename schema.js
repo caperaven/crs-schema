@@ -46,7 +46,7 @@ export const template = {
             "elements": [
                 {
                     "element": "div",
-                    "content": "Testing new template"
+                    "content": true
                 }
             ]
         }
