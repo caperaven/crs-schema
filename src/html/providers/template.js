@@ -16,14 +16,14 @@ export default class TemplateProvider extends BaseProvider {
         const manager = this.parser.managers.get("templates");
         if (manager == null) throw new Error("templates manager should be registered");
 
-        // let store = Object.keys(item)[1];
-        // const id = item[store];
-        //
-        // if (store == "template") {
-        //     store = "templates";
-        // } NOTE GM: This logic is failing if the template is not the second property on the item. Need to chat to JHR to figure out what custom template store name can be used for.
+        let store =  Object.getOwnPropertyNames(item).find(p=>p.toLowerCase().indexOf("template") !== -1);
+        const id = item[store];
 
-        const template = manager.getTemplate("templates", item.template); // NOTE GM: Hardcoded to templates till above comment resolved.
+        if (store == "template") {
+            store = "templates";
+        }
+
+        const template = manager.getTemplate(store, id); // NOTE GM: Hardcoded to templates till above comment resolved.
         item.elements = template.elements;
         const parts = super.process(item);
 
