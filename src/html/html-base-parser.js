@@ -37,12 +37,19 @@ export class HTMLBaseParser extends BaseParser {
     }
 
     parseItem(item, key) {
+        if(item == null) return;
         key = key || item[this.options.elementKey];
         if (this.providers.has(key)) {
-            return this.providers.get(key).process(item);
+            const provider = this.providers.get(key);
+            if(provider.shouldParse(item) !== false) {
+                return provider.process(item);
+            }
         }
         else {
-            return this.providers.get("raw").process(item, key);
+            const provider = this.providers.get("raw");
+            if(provider.shouldParse(item) !== false) {
+                return provider.process(item, key);
+            }
         }
     }
 
@@ -55,7 +62,7 @@ export class HTMLBaseParser extends BaseParser {
             const key = values[0];
             let value = values[1];
 
-            value = this.parseStringValue(value);
+            value = this.parseStringValue(value, key);
 
             result.push(`${key}="${value}"`);
         });
@@ -94,9 +101,9 @@ export class HTMLBaseParser extends BaseParser {
         return content;
     }
 
-    parseStringValue(str) {
+    parseStringValue(str, key) {
         for (let processor of this.valueProcessors) {
-            str = processor.process(str);
+            str = processor.process(str, key);
         }
         return str;
     }

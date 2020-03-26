@@ -6,6 +6,14 @@ export class BaseProvider {
     dispose() {
         delete this.parser;
     }
+
+    /**
+     * This function will be called for each provider to do some validation checks if the item can be parsed
+     * @param item
+     */
+    shouldParse(item) {
+        return true;
+    }
     
     process(item) {
         if (this.styles != null) {

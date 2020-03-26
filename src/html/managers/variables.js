@@ -18,11 +18,16 @@ export default class VariablesManager extends BaseManager {
     }
 
     process(value) {
+        return this.getValue(value);
+    }
+
+    getValue(value) {
         if (typeof value != "string" || value.trim()[0] != "@") return value;
 
         //JHR: make this async and put a catch on it
 
         value = value.slice(1);
+
         let fn = new Function("variables", `return variables.${value}`);
         const result = fn(this.variables);
         fn = null;
