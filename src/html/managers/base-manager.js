@@ -9,9 +9,6 @@ export class BaseManager {
         delete this.parser;
     }
 
-    reset() {
-    }
-
     assert(callback, errors, message) {
         const failed = callback() == true;
 

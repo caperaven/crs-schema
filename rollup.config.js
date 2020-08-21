@@ -102,12 +102,6 @@ export default [
             terser()
         ]
     },
-
-
-
-
-
-
     {
         input: "src/html/providers/base-provider.js",
         output: [
@@ -139,6 +133,24 @@ export default [
         input: "src/html/managers/base-manager.js",
         output: [
             { file: 'dist/cjs/html/crs-base-manager.js', format: 'cjs', sourcemap: true}
+        ],
+        plugins: [
+            terser()
+        ]
+    },
+    {
+        input: "src/base-parser.js",
+        output: [
+            { file: 'dist/es/base-parser.js', format: 'es', sourcemap: true}
+        ],
+        plugins: [
+            terser()
+        ]
+    },
+    {
+        input: "src/base-parser.js",
+        output: [
+            { file: 'dist/cjs/base-parser.js', format: 'cjs', sourcemap: true}
         ],
         plugins: [
             terser()
