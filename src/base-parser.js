@@ -9,12 +9,12 @@ export class BaseParser {
     }
 
     async dispose() {
-        for (let provider of this.providers) {
-            await provider.dispose();
+        for (let provider of this.providers.keys()) {
+            await this.providers.get(provider).dispose();
         }
 
-        for (let manager of this.managers) {
-            await manager.dispose();
+        for (let manager of this.managers.keys()) {
+            await this.managers.get(manager).dispose();
         }
 
         await this.providers.clear();

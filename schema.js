@@ -45,8 +45,14 @@ export const template = {
             "id": 1,
             "elements": [
                 {
-                    "element": "div",
-                    "content": true
+                    "element": "group",
+                    "caption": "Main Group",
+                    "elements": [
+                        {
+                            "element": "div",
+                            "content": true
+                        }
+                    ]
                 }
             ]
         }
