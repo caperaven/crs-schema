@@ -10,13 +10,13 @@ export default class ButtonProvider extends BaseProvider {
         return `<button __attributes__ __styles__>__content__</button>`
     }
 
-    process(item, key) {
-        const parts = super.process(item);
-        const caption = this.parser.parseStringValue(item.caption);
+    async process(item, key) {
+        const parts = await super.process(item);
+        const caption = await this.parser.parseStringValue(item.caption);
         const icon = item.icon == null ? "" : svgLink.split("__icon__").join(item.icon);
         const content = item.icon == null ? `<span>${caption}</span>` : `${icon}<span>${caption}</span>`;
 
-        return this.setValues(this.template, {
+        return await this.setValues(this.template, {
             "__attributes__": parts.attributes,
             "__styles__": parts.styles,
             "__content__": content

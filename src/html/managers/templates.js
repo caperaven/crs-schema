@@ -5,7 +5,7 @@ export default class TemplatesManager extends BaseManager {
         return "templates"
     }
 
-    reset() {
+    async reset() {
         for (let part of this._parts || []) {
             if (this[part] != null) {
                 this[part].clear();
@@ -14,12 +14,12 @@ export default class TemplatesManager extends BaseManager {
         }
     }
 
-    initialize() {
+    async initialize() {
         this._parts = [];
-        this._load("templates");
+        await this._load("templates");
     }
 
-    _load(name) {
+    async _load(name) {
         if (this[name] == null) {
             this[name] = new Map();
             this._parts.push(name);
@@ -31,27 +31,27 @@ export default class TemplatesManager extends BaseManager {
                 this[name].set(template.id, template);
             }
             else {
-                this._load(template.import);
+                await this._load(template.import);
             }
         }
     }
 
-    getTemplate(store, id) {
+    async getTemplate(store, id) {
         if(this[store].has(id) == false) throw new Error(`There is no template in the schema for with id "${id}"`);
         return this[store].get(id);
     }
 
-    validate(templates, errors) {
-        if (this.assert(() => Array.isArray(templates) == false, errors, "templates definition must be a array")) {
-            this.initialize(templates);
-            this.templates.forEach(item => {
-                this.assert(() => item.id == null, errors, "template must have a valid id property");
-                this.assert(() => item.elements == null, errors, "template must have a elements property");
-                this.assert(() => Array.isArray(item.elements) != true, errors, "template elements property should be an array");
-                if (this.assert(() => (item.elements || []).length == 0, errors, "template elements must contain content")) {
-                    super.validate(item, errors);
+    async validate(templates, errors) {
+        if (await this.assert(() => Array.isArray(templates) == false, errors, "templates definition must be a array")) {
+            await this.initialize(templates);
+            for (const item of this.templates) {
+                await this.assert(() => item.id == null, errors, "template must have a valid id property");
+                await this.assert(() => item.elements == null, errors, "template must have a elements property");
+                await this.assert(() => Array.isArray(item.elements) != true, errors, "template elements property should be an array");
+                if (await this.assert(() => (item.elements || []).length == 0, errors, "template elements must contain content")) {
+                    await super.validate(item, errors);
                 }
-            })
+            }
         }
     }
 }

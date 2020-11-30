@@ -9,10 +9,10 @@ export default class RawProvider extends BaseProvider {
         return `<__element__ __attributes__ __styles__>__content__</__element__>`
     }
 
-    process(item, key) {
-        const parts = super.process(item);
+    async process(item, key) {
+        const parts = await super.process(item);
 
-        return this.setValues(this.template, {
+        return await this.setValues(this.template, {
             "__element__": key,
             "__attributes__": parts.attributes,
             "__styles__": parts.styles,
@@ -20,7 +20,7 @@ export default class RawProvider extends BaseProvider {
         })
     }
 
-    validate(item, errors) {
-        super.validate(item, errors);
+    async validate(item, errors) {
+        await super.validate(item, errors);
     }
 }

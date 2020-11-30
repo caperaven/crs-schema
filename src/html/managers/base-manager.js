@@ -4,12 +4,12 @@ export class BaseManager {
         this.isManager = true;
     }
     
-    dispose() {
-        this.reset();
+    async dispose() {
+        await this.reset();
         delete this.parser;
     }
 
-    assert(callback, errors, message) {
+    async assert(callback, errors, message) {
         const failed = callback() == true;
 
         if (failed) {
@@ -19,15 +19,15 @@ export class BaseManager {
         return !failed;
     }
 
-    validate(item, errors) {
+    async validate(item, errors) {
         if (item.elements != null) {
             for (let element of item.elements) {
-                this.parser.validateItem(element, errors);
+                await this.parser.validateItem(element, errors);
             }
         }
     }
 
-    reset() {
+    async reset() {
         // override to clear
     }
 }

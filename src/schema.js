@@ -14,29 +14,26 @@ class Schema {
         this.parser = parser;
     }
 
-    dispose() {
-        this.parser.dispose();
+    async dispose() {
+        await this.parser.dispose();
         this.parser = null;
     }
 
-    validate(schema) {
+    async validate(schema) {
         const errors = [];
-        this.parser.validate(schema, errors);
+        await this.parser.validate(schema, errors);
         return errors;
     }
 
-    parse(schema) {
-        return this.parser.parse(schema);
+    async parse(schema) {
+        return await this.parser.parse(schema);
     }
 
-    load(libraries) {
-        return new Promise(async resolve => {
-            await this.parser.load(libraries);
-            resolve(this);
-        });
+    async load(libraries) {
+        await this.parser.load(libraries);
     }
 
-    register(plugin) {
-        this.parser.register(plugin);
+    async register(plugin) {
+        await this.parser.register(plugin);
     }
 }

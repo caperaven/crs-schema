@@ -1,5 +1,20 @@
 import {BaseManager} from "./base-manager.js";
 
+export async function getValueOnPath(object, path) {
+    let obj = object;
+    if (path.indexOf(".") == -1) {
+        return obj[path];
+    }
+
+    const parts = path.split(".");
+    for (let i = 0; i < parts.length -1; i++) {
+        const part = parts[i];
+        obj = obj[part];
+        if (obj == null) return null;
+    }
+    return obj[parts[parts.length -1]];
+}
+
 export default class VariablesManager extends BaseManager {
     get key() {
         return "variables"
@@ -9,28 +24,20 @@ export default class VariablesManager extends BaseManager {
         return true;
     }
 
-    reset() {
+    async reset() {
         delete this.variables;
     }
 
-    initialize(variables) {
+    async initialize(variables) {
         this.variables = variables;
     }
 
-    process(value) {
+    async process(value) {
         return this.getValue(value);
     }
 
-    getValue(value) {
+    async getValue(value) {
         if (typeof value != "string" || value.trim()[0] != "@") return value;
-
-        //JHR: make this async and put a catch on it
-
-        value = value.slice(1);
-
-        let fn = new Function("variables", `return variables.${value}`);
-        const result = fn(this.variables);
-        fn = null;
-        return result;
+        return getValueOnPath(this.variables, value.slice(1));
     }
 }

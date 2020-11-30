@@ -11,8 +11,7 @@ export default class TemplateProvider extends BaseProvider {
                 </div>`;
     }
 
-
-    process(item, key) {
+    async process(item, key) {
         const manager = this.parser.managers.get("templates");
         if (manager == null) throw new Error("templates manager should be registered");
 
@@ -23,23 +22,23 @@ export default class TemplateProvider extends BaseProvider {
             store = "templates";
         }
 
-        const template = manager.getTemplate(store, id); // NOTE GM: Hardcoded to templates till above comment resolved.
+        const template = await manager.getTemplate(store, id); // NOTE GM: Hardcoded to templates till above comment resolved.
         item.elements = template.elements;
-        const parts = super.process(item);
+        const parts = await super.process(item);
 
-        return this.setValues(this.template,
+        return await this.setValues(this.template,
             {
                 "__attributes__": parts.attributes,
                 "__classes__": parts.styles,
                 "__content__": parts.children});
     }
 
-    processTemplate(template) {
-        const parts = super.process(template);
+    async processTemplate(template) {
+        const parts = await super.process(template);
         return parts.children;
     }
 
-    validate(item, errors) {
-        this.assert(() => item.template == null, errors, "template element must have a valid template property");
+    async validate(item, errors) {
+        await this.assert(() => item.template == null, errors, "template element must have a valid template property");
     }
 }

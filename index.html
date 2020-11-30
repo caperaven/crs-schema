@@ -60,15 +60,15 @@
     import "./material/index.js";
 
     createSchemaLoader(new HTMLParser({design: true})).then(async manager => {
-        manager.register(crs.material.HeaderProvider);
-        manager.register(crs.material.ButtonProvider);
+        await manager.register(crs.material.HeaderProvider);
+        await manager.register(crs.material.ButtonProvider);
 
-        document.body.innerHTML = manager.parse(template);
+        document.body.innerHTML = await manager.parse(template);
     });
 
     createSchemaLoader(new TemplateParser(template)).then(async manager => {
         //const result = manager.parse(0);
-        const result = manager.parser.parseTemplate({
+        const result = await manager.parser.parseTemplate({
             "id": 0,
             "elements": [
                 {

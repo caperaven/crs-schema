@@ -25,7 +25,7 @@ export default class HeaderProvider extends BaseProvider {
         return `<button id="__id__" class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="__caption__">__icon__</button>`
     }
 
-    _processButtons(item) {
+    async _processButtons(item) {
         if (item.buttons == null) return "";
 
         const result = [];
@@ -38,15 +38,15 @@ export default class HeaderProvider extends BaseProvider {
         return result.join("");
     }
 
-    process(item) {
-        this.parser.addStyleImports([
+    async process(item) {
+        await this.parser.addStyleImports([
             "/node_modules/@material/top-app-bar/dist/mdc.top-app-bar.min.css",
             "/node_modules/@material/icon-button/dist/mdc.icon-button.min.css"
         ]);
 
-        return this.setValues(this.template, {
-            "__caption__": this.parser.parseStringValue(item.caption),
-            "__actions__": this._processButtons(item)
+        return await this.setValues(this.template, {
+            "__caption__": await this.parser.parseStringValue(item.caption),
+            "__actions__": await this._processButtons(item)
         })
     }
 }

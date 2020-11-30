@@ -12,10 +12,10 @@ export default class GroupProvider extends BaseProvider {
                 </div>`
     }
 
-    process(item) {
-        const parts = super.process(item);
+    async process(item) {
+        const parts = await super.process(item);
 
-        return this.setValues(this.template, {
+        return await this.setValues(this.template, {
             "__caption__": this.parser.parseStringValue(item.caption),
             "__attributes__": parts.attributes,
             "__styles__": parts.styles

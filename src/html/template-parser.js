@@ -8,23 +8,23 @@ export class TemplateParser extends HTMLBaseParser {
 
     async initialize() {
         await super.initialize();
-        this.init();
+        await this.init();
     }
 
-    parse(id) {
+    async parse(id) {
         const data = {
             template: id
         };
 
-        let result = this.providers.get("template").process(data);
-        result = this.processStyleImports(result);
+        let result = await this.providers.get("template").process(data);
+        result = await this.processStyleImports(result);
 
         return result;
     }
 
-    parseTemplate(tpl) {
-        let result = this.providers.get("template").processTemplate(tpl);
-        result = this.processStyleImports(result);
+    async parseTemplate(tpl) {
+        let result = await this.providers.get("template").processTemplate(tpl);
+        result = await this.processStyleImports(result);
 
         return result;
     }

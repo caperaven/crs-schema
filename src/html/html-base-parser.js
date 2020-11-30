@@ -21,27 +21,27 @@ export class HTMLBaseParser extends BaseParser {
         };
     }
 
-    dispose() {
-        super.dispose();
+    async dispose() {
+        await super.dispose();
         this.styleImports.length = 0;
         this.options = null;
     }
 
     async initialize() {
-        this.register(TemplatesManager);
-        this.register(VariablesManager);
-        this.register(BodyProvider);
-        this.register(RawProvider);
-        this.register(TemplateProvider);
-        this.register(ButtonProvider);
+        await this.register(TemplatesManager);
+        await this.register(VariablesManager);
+        await this.register(BodyProvider);
+        await this.register(RawProvider);
+        await this.register(TemplateProvider);
+        await this.register(ButtonProvider);
     }
 
-    parseItem(item, key) {
+    async parseItem(item, key) {
         if(item == null) return;
         key = key || item[this.options.elementKey];
         if (this.providers.has(key)) {
             const provider = this.providers.get(key);
-            if(provider.shouldParse(item) !== false) {
+            if(await provider.shouldParse(item) !== false) {
                 return provider.process(item);
             }
         }
@@ -53,24 +53,24 @@ export class HTMLBaseParser extends BaseParser {
         }
     }
 
-    parseAttributes(item) {
+    async parseAttributes(item) {
         const attributes = item[this.options.attributesKey];
         if (attributes == null) return null;
 
         const result = [];
-        Object.entries(attributes).forEach((values) => {
+        for (const values of Object.entries(attributes)) {
             const key = values[0];
             let value = values[1];
 
-            value = this.parseStringValue(value, key);
+            value = await this.parseStringValue(value, key);
 
             result.push(`${key}="${value}"`);
-        });
+        }
 
         return result.join(" ");
     }
 
-    parseStyles(item) {
+    async parseStyles(item) {
         let styles = item[this.options.stylesKey];
         if (styles == null) return null;
 
@@ -81,29 +81,27 @@ export class HTMLBaseParser extends BaseParser {
         return `class="${styles}"`;
     }
 
-    parseChildren(item) {
+    async parseChildren(item) {
         const children = item[this.options.childrenKey];
         if (children == null) return null;
 
         const result = [];
         for (let child of children) {
-            result.push(this.parseItem(child));
+            result.push(await this.parseItem(child));
         }
         return result.join("");
     }
 
-    parseContent(item) {
+    async parseContent(item) {
         let content = item[this.options.contentKey];
         if (content == null) return null;
 
-        content = this.parseStringValue(content);
-
-        return content;
+        return this.parseStringValue(content);
     }
 
-    parseStringValue(str, key) {
+    async parseStringValue(str, key) {
         for (let processor of this.valueProcessors) {
-            str = processor.process(str, key);
+            str = await processor.process(str, key);
         }
         return str;
     }

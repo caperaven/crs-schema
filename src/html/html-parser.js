@@ -1,7 +1,7 @@
 import {HTMLBaseParser} from "./html-base-parser.js";
 
 export class HTMLParser extends HTMLBaseParser {
-    addStyleImports(imports) {
+    async addStyleImports(imports) {
         if (Array.isArray(imports)) {
             imports.forEach(imp => this.styleImports.push(imp));
         }
@@ -11,10 +11,10 @@ export class HTMLParser extends HTMLBaseParser {
         }
     }
 
-    parse(schema) {
+    async parse(schema) {
         this.schema = schema;
 
-        this.init();
+        await this.init();
 
         if (this.providers.has(this.options.root) == false) {
             throw new Error(`schema requires a "${this.options.root}" option`);
@@ -23,16 +23,20 @@ export class HTMLParser extends HTMLBaseParser {
         const root = schema[this.options.root];
         if (root == null) throw new Error(`schema should have a property "${this.options.root}"`);
 
-        let result = this.providers.get(this.options.root).process(root);
-        result = this.processStyleImports(result);
+        let result = await this.providers.get(this.options.root).process(root);
+        result = await this.processStyleImports(result);
 
-        this.managers.forEach(manager => manager.reset());
+        for (const managerKey of this.managers.keys()) {
+            const manager = this.managers.get(managerKey);
+            await manager.reset();
+        }
+
         delete this.schema;
 
         return result;
     }
 
-    validate(schema, errors) {
+    async validate(schema, errors) {
         const rootProvider = this.providers.get(this.options.root);
         if (rootProvider == null) {
             errors.push("a root provider was not registered");
@@ -55,7 +59,7 @@ export class HTMLParser extends HTMLBaseParser {
         rootProvider && rootProvider.validate(root, errors);
     }
 
-    validateItem(item, errors) {
+    async validateItem(item, errors) {
         const key = item["element"];
         let provider = this.providers.get(key);
 

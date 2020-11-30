@@ -9,19 +9,19 @@ export default class BodyProvider extends BaseProvider {
         return `__content__`
     }
 
-    process(item) {
-        const parts = super.process(item);
+    async process(item) {
+        const parts = await super.process(item);
 
-        return this.setValues(this.template, {
+        return await this.setValues(this.template, {
             "__content__": parts.children
         })
     }
 
-    validate(item, errors) {
-        this.assert(() => Array.isArray(item), errors, "Body element must be a object not an array");
-        this.assert(() => item.elements == null, errors, "elements property required on body");
-        this.assert(() => Array.isArray(item.elements) == false, errors, "element property on body must be an array");
+    async validate(item, errors) {
+        await this.assert(() => Array.isArray(item), errors, "Body element must be a object not an array");
+        await this.assert(() => item.elements == null, errors, "elements property required on body");
+        await this.assert(() => Array.isArray(item.elements) == false, errors, "element property on body must be an array");
 
-        super.validate(item, errors);
+        await super.validate(item, errors);
     }
 }

@@ -1,24 +1,34 @@
 export class BaseParser {
     constructor(attributes) {
         this.attributes = attributes;
+        this.styleImports = [];
         this.providers = new Map();
         this.managers = new Map();
 
         this.valueProcessors = [];
     }
 
-    dispose() {
-        this.providers.clear();
-        delete this.providers;
+    async dispose() {
+        for (let provider of this.providers) {
+            await provider.dispose();
+        }
 
-        this.managers.clear();
+        for (let manager of this.managers) {
+            await manager.dispose();
+        }
+
+        await this.providers.clear();
+        await this.managers.clear();
+
+        delete this.providers;
         delete this.managers;
+        delete this.attributes;
 
         this.valueProcessors.length = 0;
         this.options = 0;
     }
 
-    register(type) {
+    async register(type) {
         const instance = new type(this);
 
         if (instance.isManager == true) {
@@ -34,27 +44,27 @@ export class BaseParser {
 
     async load(libraries) {
         for (let library of libraries || []) {
-            this.register((await import(library)).default);
+            await this.register((await import(library)).default);
         }
     }
 
-    init() {
-        this.managers.forEach(value => {
-            value.reset && value.reset();
-        });
+    async init() {
+        for (const value of this.managers) {
+            value.reset && await value.reset();
+        }
 
         const keys = Object.keys(this.schema);
 
         for (let key of keys) {
             if (key != this.options.root) {
                 if (this.managers.has(key)) {
-                    this.managers.get(key).initialize(this.schema[key]);
+                    await this.managers.get(key).initialize(this.schema[key]);
                 }
             }
         }
     }
 
-    processStyleImports(result) {
+    async processStyleImports(result) {
         if (this.styleImports.length > 0) {
             const imports = [];
             this.styleImports.forEach(style => imports.push(`@import "${style}";`));
@@ -64,7 +74,7 @@ export class BaseParser {
         return result;
     }
 
-    validate() {
-
+    async validate() {
+        return;
     }
 }

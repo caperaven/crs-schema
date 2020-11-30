@@ -3,7 +3,7 @@ export class BaseProvider {
         this.parser = parser;
     }
 
-    dispose() {
+    async dispose() {
         delete this.parser;
     }
 
@@ -11,19 +11,19 @@ export class BaseProvider {
      * This function will be called for each provider to do some validation checks if the item can be parsed
      * @param item
      */
-    shouldParse(item) {
+    async shouldParse(item) {
         return true;
     }
     
-    process(item) {
+    async process(item) {
         if (this.styles != null) {
             item.styles = [];
         }
 
-        const children = this.parser.parseChildren(item);
-        const attributes = this.parser.parseAttributes(item);
-        const styles = this.parser.parseStyles(item);
-        const content = this.parser.parseContent(item);
+        const children = await this.parser.parseChildren(item);
+        const attributes = await this.parser.parseAttributes(item);
+        const styles = await this.parser.parseStyles(item);
+        const content = await this.parser.parseContent(item);
 
         return {
             children: children,
@@ -33,7 +33,7 @@ export class BaseProvider {
         }
     }
 
-    setValues(str, obj) {
+    async setValues(str, obj) {
         const keys = Object.keys(obj);
         for (let key of keys) {
             const value = obj[key] != null ? obj[key] : "";
@@ -42,16 +42,16 @@ export class BaseProvider {
         return str;
     }
 
-    validate(item, errors) {
+    async validate(item, errors) {
         if (item.elements != null) {
             for (let element of item.elements) {
-                this.parser.validateItem(element, errors);
+                await this.parser.validateItem(element, errors);
             }
         }
     }
 
-    assert(callback, errors, message) {
-        const failed = callback() == true;
+    async assert(callback, errors, message) {
+        const failed = (await callback()) == true;
 
         if (failed) {
             errors.push(message)
