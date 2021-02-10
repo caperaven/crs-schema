@@ -40,8 +40,10 @@
     </style>
 </head>
 <body>
+    <svg width="800" height="600"></svg>
     <script type="module">
         import {template} from "./schema.js";
+        import {svgTemplate} from "./svg-schema.js";
         //
         // const worker = new Worker('worker.js');
         //
@@ -55,30 +57,59 @@
         // };
 
     import {createSchemaLoader} from "./src/schema.js";
-    import {HTMLParser} from "./src/html/html-parser.js";
-    import {TemplateParser} from "./src/html/template-parser.js";
-    import "./material/index.js";
+    import {SvgParser} from "./src/svg/svg-parser.js";
 
-    createSchemaLoader(new HTMLParser({design: true})).then(async manager => {
-        await manager.register(crs.material.HeaderProvider);
-        await manager.register(crs.material.ButtonProvider);
+        // import {HTMLParser} from "./src/html/html-parser.js";
+    // import {TemplateParser} from "./src/html/template-parser.js";
+    // import "./material/index.js";
 
-        document.body.innerHTML = await manager.parse(template);
-    });
+    // createSchemaLoader(new HTMLParser({design: true})).then(async manager => {
+    //     await manager.register(crs.material.HeaderProvider);
+    //     await manager.register(crs.material.ButtonProvider);
+    //
+    //     document.body.innerHTML = await manager.parse(template);
+    // });
+    //
+    // createSchemaLoader(new TemplateParser(template)).then(async manager => {
+    //     //const result = manager.parse(0);
+    //     const result = await manager.parser.parseTemplate({
+    //         "id": 0,
+    //         "elements": [
+    //             {
+    //                 "element": "group",
+    //                 "caption": "@translations.heading"
+    //             }
+    //         ]
+    //     });
+    //     console.log(result);
+    // });
 
-    createSchemaLoader(new TemplateParser(template)).then(async manager => {
-        //const result = manager.parse(0);
-        const result = await manager.parser.parseTemplate({
-            "id": 0,
-            "elements": [
+    import GroupProvider from "./src/svg/providers/group.js";
+    import ListProvider from "./src/svg/providers/list.js";
+    createSchemaLoader(new SvgParser()).then(async manager => {
+        await manager.register(GroupProvider);
+        await manager.register(ListProvider);
+        const result = await manager.parser.parse(svgTemplate, {
+            items: [
                 {
-                    "element": "group",
-                    "caption": "@translations.heading"
+                    title: "Item 1"
+                },
+                {
+                    title: "Item 2"
+                },
+                {
+                    title: "Item 3"
+                },
+                {
+                    title: "Item 4"
                 }
-            ]
+            ],
+            group: {
+                title: "My Group",
+            }
         });
-        console.log(result);
-    });
+        document.querySelector("svg").appendChild(result);
+    })
 
         // import {createSchemaLoader} from "./publish/es/crs-schema.js";
         // import {HTMLParser} from "./publish/es/html/crs-html-parser.js";
