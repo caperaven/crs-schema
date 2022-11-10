@@ -66,12 +66,9 @@
         await manager.register(crs.material.HeaderProvider);
         await manager.register(crs.material.ButtonProvider);
 
-        const start = performance.now();
         const html = await manager.parse(template);
-        const end = performance.now();
 
         document.body.innerHTML = html;
-        console.log(end - start);
     });
 
     // createSchemaLoader(new TemplateParser(template)).then(async manager => {

@@ -1,16 +1,12 @@
 {
     "name": "crs-schema",
-    "version": "0.0.46",
-    "description": "",
+    "version": "1.0.0",
+    "description": "scema based generation",
     "main": "src/index.js",
     "directories": {
         "test": "test"
     },
     "scripts": {
-        "test": "jest",
-        "bundle": "rollup -c",
-        "build-publish": "node build/publish.js",
-        "parse": "node build/process.js"
     },
     "keywords": [
         "UI",
@@ -19,20 +15,5 @@
     ],
     "author": "Johan Rabie",
     "homepage": "https://caperaven.co.za/",
-    "license": "ISC",
-    "devDependencies": {
-        "@babel/core": "^7.6.0",
-        "@babel/plugin-proposal-throw-expressions": "^7.2.0",
-        "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-        "@babel/preset-env": "^7.6.0",
-        "@types/jest": "^24.0.18",
-        "babel-jest": "^24.9.0",
-        "glob": "^7.1.4",
-        "jest": "^24.9.0",
-        "mkdirp": "^0.5.1",
-        "rollup": "^1.23.0",
-        "rollup-plugin-terser": "^5.1.2",
-        "@material/button": "^4.0.0",
-        "@material/top-app-bar": "^4.0.0"
-    }
+    "license": "MIT"
 }
