@@ -16,14 +16,14 @@ export class TemplateParser extends HTMLBaseParser {
             template: id
         };
 
-        let result = await this.providers.get("template").process(data);
+        let result = await this.providers["template"].process(data);
         result = await this.processStyleImports(result);
 
         return result;
     }
 
     async parseTemplate(tpl) {
-        let result = await this.providers.get("template").processTemplate(tpl);
+        let result = await this.providers["template"].processTemplate(tpl);
         result = await this.processStyleImports(result);
 
         return result;

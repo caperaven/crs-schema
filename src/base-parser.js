@@ -1,44 +1,65 @@
 export class BaseParser {
-    constructor(attributes) {
-        this.attributes = attributes;
-        this.styleImports = [];
-        this.providers = new Map();
-        this.managers = new Map();
+    #attributes;
+    #styleImports = [];
+    #providers = {};
+    #managers = {};
+    #valueProcessors = []
+    #options;
 
-        this.valueProcessors = [];
+    get options() {
+        return this.#options;
+    }
+
+    get providers() {
+        return this.#providers;
+    }
+
+    get valueProcessors() {
+        return this.#valueProcessors;
+    }
+
+    get managers() {
+        return this.#managers;
+    }
+
+    get styleImports() {
+        return this.#styleImports;
+    }
+
+    constructor(attributes, options) {
+        this.#attributes = attributes;
+        this.#options = options || {};
     }
 
     async dispose() {
-        for (let provider of this.providers.keys()) {
-            await this.providers.get(provider).dispose();
+        for (let provider of Object.keys(this.#providers)) {
+            await this.#providers[provider].dispose();
         }
 
-        for (let manager of this.managers.keys()) {
-            await this.managers.get(manager).dispose();
+        for (let manager of Object.keys(this.#managers)) {
+            await this.#managers[manager].dispose();
         }
 
-        await this.providers.clear();
-        await this.managers.clear();
-
-        delete this.providers;
-        delete this.managers;
-        delete this.attributes;
-
-        this.valueProcessors.length = 0;
-        this.options = 0;
+        this.#providers = null;
+        this.#managers = null;
+        this.#attributes = null;
+        this.#valueProcessors = null;
+        this.#styleImports = null;
+        this.#options = 0;
     }
 
     async register(type) {
         const instance = new type(this);
 
         if (instance.isManager == true) {
-            this.managers.set(instance.key, instance);
+            this.#managers[instance.key] = instance;
+
             if (instance.valueProcessor == true) {
-                this.valueProcessors.push(instance);
+                this.#valueProcessors.push(instance);
             }
         }
         else {
-            this.providers.set(instance.key, instance);
+            this.#providers[instance.key] = instance;
         }
     }
 
@@ -49,32 +70,29 @@ export class BaseParser {
     }
 
     async init() {
-        for (const value of this.managers) {
-            value.reset && await value.reset();
+        for (const manager of Object.keys(this.#managers)) {
+            const value = this.#managers[manager];
+            await value.reset?.();
         }
 
         const keys = Object.keys(this.schema);
 
         for (let key of keys) {
-            if (key != this.options.root) {
-                if (this.managers.has(key)) {
-                    await this.managers.get(key).initialize(this.schema[key]);
+            if (key != this.#options.root) {
+                if (this.#managers[key] != null) {
+                    await this.#managers[key].initialize(this.schema[key]);
                 }
             }
         }
     }
 
     async processStyleImports(result) {
-        if (this.styleImports.length > 0) {
+        if (this.#styleImports.length > 0) {
             const imports = [];
-            this.styleImports.forEach(style => imports.push(`@import "${style}";`));
+            this.#styleImports.forEach(style => imports.push(`@import "${style}";`));
 
             result = `<style>${imports.join("\n")};</style>${result}`;
         }
         return result;
-    }
-
-    async validate() {
-        return;
     }
 }

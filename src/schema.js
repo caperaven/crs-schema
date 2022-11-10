@@ -4,36 +4,34 @@ export async function createSchemaLoader(parser) {
     return result;
 }
 
-if (typeof self != "undefined") {
-    self.crs = self.crs || {};
-    self.crs.createSchemaLoader = createSchemaLoader;
-}
+globalThis.crs ||= {};
+globalThis.crs.createSchemaLoader = createSchemaLoader;
 
 class Schema {
+    #parser;
+
+    get parser() {
+        return this.#parser;
+    }
+    
     constructor(parser) {
-        this.parser = parser;
+        this.#parser = parser;
     }
 
     async dispose() {
-        await this.parser.dispose();
-        this.parser = null;
-    }
-
-    async validate(schema) {
-        const errors = [];
-        await this.parser.validate(schema, errors);
-        return errors;
+        await this.#parser.dispose();
+        this.#parser = null;
     }
 
     async parse(schema) {
-        return await this.parser.parse(schema);
+        return await this.#parser.parse(schema);
     }
 
     async load(libraries) {
-        await this.parser.load(libraries);
+        await this.#parser.load(libraries);
     }
 
     async register(plugin) {
-        await this.parser.register(plugin);
+        await this.#parser.register(plugin);
     }
 }

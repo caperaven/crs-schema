@@ -11,7 +11,7 @@ export class SvgParser extends BaseParser {
     async parse(schema, data) {
         this._data = data;
         const body = schema.body;
-        const provider = this.providers.get("body");
+        const provider = this.providers["body"];
         const result = await provider.process(body);
         delete this._data;
         return result;
@@ -29,7 +29,7 @@ export class SvgParser extends BaseParser {
 
     async parseItem(item, parent) {
         const key = item.element;
-        const provider = this.providers.get(key) || this.providers.get("raw");
+        const provider = this.providers[key] || this.providers["raw"];
         return await provider.process(item, parent);
     }
 

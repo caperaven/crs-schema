@@ -19,14 +19,6 @@ export class BaseManager {
         return !failed;
     }
 
-    async validate(item, errors) {
-        if (item.elements != null) {
-            for (let element of item.elements) {
-                await this.parser.validateItem(element, errors);
-            }
-        }
-    }
-
     async reset() {
         // override to clear
     }

@@ -42,14 +42,6 @@ export class BaseProvider {
         return str;
     }
 
-    async validate(item, errors) {
-        if (item.elements != null) {
-            for (let element of item.elements) {
-                await this.parser.validateItem(element, errors);
-            }
-        }
-    }
-
     async assert(callback, errors, message) {
         const failed = (await callback()) == true;
 

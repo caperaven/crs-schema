@@ -57,19 +57,23 @@
         // };
 
     import {createSchemaLoader} from "./src/schema.js";
-    import {SvgParser} from "./src/svg/svg-parser.js";
+    import {HTMLParser} from "./src/html/html-parser.js";
+    import "./material/index.js";
+        // import {SvgParser} from "./src/svg/svg-parser.js"
+        // import {TemplateParser} from "./src/html/template-parser.js";
 
-        // import {HTMLParser} from "./src/html/html-parser.js";
-    // import {TemplateParser} from "./src/html/template-parser.js";
-    // import "./material/index.js";
+    createSchemaLoader(new HTMLParser({design: true})).then(async manager => {
+        await manager.register(crs.material.HeaderProvider);
+        await manager.register(crs.material.ButtonProvider);
 
-    // createSchemaLoader(new HTMLParser({design: true})).then(async manager => {
-    //     await manager.register(crs.material.HeaderProvider);
-    //     await manager.register(crs.material.ButtonProvider);
-    //
-    //     document.body.innerHTML = await manager.parse(template);
-    // });
-    //
+        const start = performance.now();
+        const html = await manager.parse(template);
+        const end = performance.now();
+
+        document.body.innerHTML = html;
+        console.log(end - start);
+    });
+
     // createSchemaLoader(new TemplateParser(template)).then(async manager => {
     //     //const result = manager.parse(0);
     //     const result = await manager.parser.parseTemplate({
@@ -84,32 +88,32 @@
     //     console.log(result);
     // });
 
-    import GroupProvider from "./src/svg/providers/group.js";
-    import ListProvider from "./src/svg/providers/list.js";
-    createSchemaLoader(new SvgParser()).then(async manager => {
-        await manager.register(GroupProvider);
-        await manager.register(ListProvider);
-        const result = await manager.parser.parse(svgTemplate, {
-            items: [
-                {
-                    title: "Item 1"
-                },
-                {
-                    title: "Item 2"
-                },
-                {
-                    title: "Item 3"
-                },
-                {
-                    title: "Item 4"
-                }
-            ],
-            group: {
-                title: "My Group",
-            }
-        });
-        document.querySelector("svg").appendChild(result);
-    })
+    // import GroupProvider from "./src/svg/providers/group.js";
+    // import ListProvider from "./src/svg/providers/list.js";
+    // createSchemaLoader(new SvgParser()).then(async manager => {
+    //     await manager.register(GroupProvider);
+    //     await manager.register(ListProvider);
+    //     const result = await manager.parser.parse(svgTemplate, {
+    //         items: [
+    //             {
+    //                 title: "Item 1"
+    //             },
+    //             {
+    //                 title: "Item 2"
+    //             },
+    //             {
+    //                 title: "Item 3"
+    //             },
+    //             {
+    //                 title: "Item 4"
+    //             }
+    //         ],
+    //         group: {
+    //             title: "My Group",
+    //         }
+    //     });
+    //     document.querySelector("svg").appendChild(result);
+    // })
 
         // import {createSchemaLoader} from "./publish/es/crs-schema.js";
         // import {HTMLParser} from "./publish/es/html/crs-html-parser.js";

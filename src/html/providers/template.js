@@ -12,7 +12,7 @@ export default class TemplateProvider extends BaseProvider {
     }
 
     async process(item, key) {
-        const manager = this.parser.managers.get("templates");
+        const manager = this.parser.managers["templates"];
         if (manager == null) throw new Error("templates manager should be registered");
 
         let store =  Object.getOwnPropertyNames(item).find(p=>p.toLowerCase().indexOf("template") !== -1);
@@ -36,9 +36,5 @@ export default class TemplateProvider extends BaseProvider {
     async processTemplate(template) {
         const parts = await super.process(template);
         return parts.children;
-    }
-
-    async validate(item, errors) {
-        await this.assert(() => item.template == null, errors, "template element must have a valid template property");
     }
 }

@@ -19,8 +19,4 @@ export default class RawProvider extends BaseProvider {
             "__content__": parts.children || parts.content || ""
         })
     }
-
-    async validate(item, errors) {
-        await super.validate(item, errors);
-    }
 }
