@@ -26,10 +26,10 @@ export class BaseProvider {
             item.styles = [];
         }
 
-        const children = await this.#parser.parseChildren(item, ctx);
-        const attributes = await this.#parser.parseAttributes(item);
-        const styles = await this.#parser.parseStyles(item);
-        const content = await this.#parser.parseContent(item);
+        const children = await this.#parser.parseChildren?.(item, ctx);
+        const attributes = await this.#parser.parseAttributes?.(item);
+        const styles = await this.#parser.parseStyles?.(item);
+        const content = await this.#parser.parseContent?.(item);
 
         return {
             children: children,
