@@ -1,10 +1,16 @@
 export class BaseProvider {
+    #parser;
+
+    get parser() {
+        return this.#parser;
+    }
+    
     constructor(parser) {
-        this.parser = parser;
+        this.#parser = parser;
     }
 
     async dispose() {
-        delete this.parser;
+        this.#parser = null;
     }
 
     /**
@@ -15,15 +21,15 @@ export class BaseProvider {
         return true;
     }
     
-    async process(item) {
+    async process(item, ctx) {
         if (this.styles != null) {
             item.styles = [];
         }
 
-        const children = await this.parser.parseChildren(item);
-        const attributes = await this.parser.parseAttributes(item);
-        const styles = await this.parser.parseStyles(item);
-        const content = await this.parser.parseContent(item);
+        const children = await this.#parser.parseChildren(item, ctx);
+        const attributes = await this.#parser.parseAttributes(item);
+        const styles = await this.#parser.parseStyles(item);
+        const content = await this.#parser.parseContent(item);
 
         return {
             children: children,

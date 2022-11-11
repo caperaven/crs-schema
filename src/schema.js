@@ -23,8 +23,8 @@ class Schema {
         this.#parser = null;
     }
 
-    async parse(schema) {
-        return await this.#parser.parse(schema);
+    async parse(schema, ctx) {
+        return await this.#parser.parse(schema, ctx);
     }
 
     async load(libraries) {

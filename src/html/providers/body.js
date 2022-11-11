@@ -9,8 +9,8 @@ export default class BodyProvider extends BaseProvider {
         return `__content__`
     }
 
-    async process(item) {
-        const parts = await super.process(item);
+    async process(item, ctx) {
+        const parts = await super.process(item, ctx);
 
         return await this.setValues(this.template, {
             "__content__": parts.children

@@ -11,7 +11,7 @@ export class HTMLParser extends HTMLBaseParser {
         }
     }
 
-    async parse(schema) {
+    async parse(schema, ctx) {
         this.schema = schema;
 
         await this.init();
@@ -23,7 +23,7 @@ export class HTMLParser extends HTMLBaseParser {
         const root = schema[this.options.root];
         if (root == null) throw new Error(`schema should have a property "${this.options.root}"`);
 
-        let result = await this.providers[this.options.root].process(root);
+        let result = await this.providers[this.options.root].process(root, ctx);
         result = await this.processStyleImports(result);
 
         for (const managerKey of Object.keys(this.managers)) {

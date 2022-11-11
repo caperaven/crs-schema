@@ -2,11 +2,13 @@ import {beforeAll, afterAll, afterEach, beforeEach, describe, it} from "https://
 import { assertEquals, assertExists, assert } from "https://deno.land/std@0.149.0/testing/asserts.ts";
 import "./../src/schema.js";
 import {HTMLParser} from "./../src/html/html-parser.js";
+import {CtxProvider} from "./providers/ctx-provider.js";
 
 let parser;
 
 beforeAll(async () => {
     parser = await crs.createSchemaLoader(new HTMLParser(null));
+    await parser.register(CtxProvider);
 })
 
 describe("html parser tests", async () => {
@@ -20,7 +22,7 @@ describe("html parser tests", async () => {
                     }
                 ]
             }
-        });
+        }, {id: 0});
 
         assertEquals(result, "<div  >hello world</div>");
     })
@@ -76,5 +78,21 @@ describe("html parser tests", async () => {
         });
 
         assert(result.indexOf("<div  >hello world</div>") != -1);
+    })
+
+    it ("ctx processing", async () => {
+        const ctx = {};
+
+        await parser.parse({
+            body: {
+                elements: [
+                    {
+                        element: "ctx"
+                    }
+                ]
+            }
+        }, ctx);
+
+        assertEquals(ctx.called, true);
     })
 })
