@@ -1,4 +1,4 @@
-import {BaseProvider} from "../../../src/html/providers/base-provider.js";
+import {BaseProvider} from "../../../dist/html/crs-base-provider.js";
 
 export default class RectProvider extends BaseProvider {
     get key() {

@@ -1,4 +1,5 @@
-import {BaseParser} from "../../../src/base-parser.js";
+import {BaseParser} from "../../../dist/base-parser.js";
+
 import BodyProvider from "../providers/body-provider.js";
 import RectProvider from "../providers/rect-provider.js";
 import CircleProvider from "../providers/circle-provider.js";

@@ -1,4 +1,4 @@
-import {BaseProvider} from "../../../src/html/providers/base-provider.js";
+import {BaseProvider} from "../../../dist/html/crs-base-provider.js";
 
 export default class CircleProvider extends BaseProvider {
     get key() {
