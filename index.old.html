@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Document</title>
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        body {
+            display: grid;
+            grid-template-rows: 56px 1fr;
+            grid-template-columns: auto;
+        }
+
+        main {
+            grid-row: 2;
+        }
+
+        button {
+            display:block;
+            width: 70px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        button svg {
+            width: 24px;
+            height: 24px;
+        }
+    </style>
+</head>
+<body>
+    <svg width="800" height="600"></svg>
+    <script type="module">
+        import {template} from "./schema.js";
+        import {svgTemplate} from "./svg-schema.js";
+        //
+        // const worker = new Worker('worker.js');
+        //
+        // worker.onmessage = (e) => {
+        //     if (e.data == "ready") {
+        //         worker.postMessage(template);
+        //     }
+        //     else {
+        //         document.body.innerHTML = e.data;
+        //     }
+        // };
+
+    import {createSchemaLoader} from "./src/schema.js";
+    import {HTMLParser} from "./src/html/html-parser.js";
+    import "./material/index.js";
+        // import {SvgParser} from "./src/svg/svg-parser.js"
+        // import {TemplateParser} from "./src/html/template-parser.js";
+
+    createSchemaLoader(new HTMLParser({design: true})).then(async manager => {
+        await manager.register(crs.material.HeaderProvider);
+        await manager.register(crs.material.ButtonProvider);
+
+        const html = await manager.parse(template);
+
+        document.body.innerHTML = html;
+    });
+
+    // createSchemaLoader(new TemplateParser(template)).then(async manager => {
+    //     //const result = manager.parse(0);
+    //     const result = await manager.parser.parseTemplate({
+    //         "id": 0,
+    //         "elements": [
+    //             {
+    //                 "element": "group",
+    //                 "caption": "@translations.heading"
+    //             }
+    //         ]
+    //     });
+    //     console.log(result);
+    // });
+
+    // import GroupProvider from "./src/svg/providers/group.js";
+    // import ListProvider from "./src/svg/providers/list.js";
+    // createSchemaLoader(new SvgParser()).then(async manager => {
+    //     await manager.register(GroupProvider);
+    //     await manager.register(ListProvider);
+    //     const result = await manager.parser.parse(svgTemplate, {
+    //         items: [
+    //             {
+    //                 title: "Item 1"
+    //             },
+    //             {
+    //                 title: "Item 2"
+    //             },
+    //             {
+    //                 title: "Item 3"
+    //             },
+    //             {
+    //                 title: "Item 4"
+    //             }
+    //         ],
+    //         group: {
+    //             title: "My Group",
+    //         }
+    //     });
+    //     document.querySelector("svg").appendChild(result);
+    // })
+
+        // import {createSchemaLoader} from "./publish/es/crs-schema.js";
+        // import {HTMLParser} from "./publish/es/html/crs-html-parser.js";
+        // import {TemplateParser} from "./src/html/template-parser.js";
+
+        // fetch("./test/schemas/simple-with-body.json").then(result => result.text()).then(text => JSON.parse(text))
+        //     .then(json => {
+        //         createSchemaLoader(new HTMLParser()).then(async manager => {
+        //             const result = manager.validate(json);
+        //             console.log(result);
+        //         });
+        //     }).catch(error => {console.error(error)})
+
+
+        // fetch("./test/schemas/simple-with-body.json").then(result => result.text()).then(text => JSON.parse(text))
+        //     .then(json => {
+        //         createSchemaLoader(new TemplateParser(json)).then(async manager => {
+        //             const result = manager.parse(0);
+        //             console.log(result);
+        //         });
+        //     })
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+	"body": {
+		"elements": [
+			{
+				"element": "rect",
+				"x": 0,
+				"y": 0,
+				"width": 50,
+				"height": 50,
+				"fill": "blue"
+			},
+			{
+				"element": "rect",
+				"x": 100,
+				"y": 0,
+				"width": 50,
+				"height": 50,
+				"fill": "red"
+			},
+			{
+				"element": "circle",
+				"x": 100,
+				"y": 100,
+				"r": 50,
+				"fill": "#ff0090"
+			}
+		]
+	}
+}

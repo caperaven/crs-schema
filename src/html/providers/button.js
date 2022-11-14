@@ -22,8 +22,4 @@ export default class ButtonProvider extends BaseProvider {
             "__content__": content
         })
     }
-
-    validate(item, errors) {
-        this.assert(() => item.caption == null, errors, "button must have a caption");
-    }
 }

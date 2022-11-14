@@ -8,23 +8,18 @@ import ButtonProvider from "./providers/button.js";
 
 export class HTMLBaseParser extends BaseParser {
     constructor(attributes) {
-        super(attributes);
-        this.styleImports = [];
-
-        this.options = {
+        super(attributes, {
             elementKey: "element",
             childrenKey: "elements",
             attributesKey: "attributes",
             stylesKey: "styles",
             root: "body",
             contentKey: "content"
-        };
+        });
     }
 
     async dispose() {
         await super.dispose();
-        this.styleImports.length = 0;
-        this.options = null;
     }
 
     async initialize() {
@@ -36,19 +31,19 @@ export class HTMLBaseParser extends BaseParser {
         await this.register(ButtonProvider);
     }
 
-    async parseItem(item, key) {
+    async parseItem(item, key, ctx) {
         if(item == null) return;
         key = key || item[this.options.elementKey];
-        if (this.providers.has(key)) {
-            const provider = this.providers.get(key);
+        if (this.providers[key] != null) {
+            const provider = this.providers[key];
             if(await provider.shouldParse(item) !== false) {
-                return provider.process(item);
+                return provider.process(item, ctx);
             }
         }
         else {
-            const provider = this.providers.get("raw");
+            const provider = this.providers["raw"];
             if(provider.shouldParse(item) !== false) {
-                return provider.process(item, key);
+                return provider.process(item, key, ctx);
             }
         }
     }
@@ -81,13 +76,13 @@ export class HTMLBaseParser extends BaseParser {
         return `class="${styles}"`;
     }
 
-    async parseChildren(item) {
+    async parseChildren(item, ctx) {
         const children = item[this.options.childrenKey];
         if (children == null) return null;
 
         const result = [];
         for (let child of children) {
-            result.push(await this.parseItem(child));
+            result.push(await this.parseItem(child, null, ctx));
         }
         return result.join("");
     }
